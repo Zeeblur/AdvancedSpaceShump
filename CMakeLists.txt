@@ -1,0 +1,71 @@
+cmake_minimum_required(VERSION 3.8)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+project(Astral_Insanity)
+SET(OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY})
+foreach (config ${CMAKE_CONFIGURATION_TYPES})
+  string (TOUPPER ${config} config)
+  set_target_properties(${_project} PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY_${config} "${OUTPUT_DIRECTORY}/${config}"
+    ARCHIVE_OUTPUT_DIRECTORY_${config} "${OUTPUT_DIRECTORY}/${config}"
+    LIBRARY_OUTPUT_DIRECTORY_${config} "${OUTPUT_DIRECTORY}/${config}"
+    #PDB_OUTPUT_DIRECTORY_${config} ${sym_path}
+    VS_INTERMEDIATE_DIRECTORY_${config} "temp"
+  )
+  SET( CMAKE_RUNTIME_OUTPUT_DIRECTORY_${config} "${OUTPUT_DIRECTORY}/${config}")
+  SET( CMAKE_RUNTIME_OUTPUT_DIRECTORY_${config} "${OUTPUT_DIRECTORY}/${config}")
+  SET( CMAKE_LIBRARY_OUTPUT_DIRECTORY_${config} "${OUTPUT_DIRECTORY}/${config}")
+  SET( CMAKE_LIBRARY_OUTPUT_DIRECTORY_${config} "${OUTPUT_DIRECTORY}/${config}")
+  SET( CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${config} "${OUTPUT_DIRECTORY}/${config}")
+  SET( CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${config} "${OUTPUT_DIRECTORY}/${config}")
+  SET( VS_INTERMEDIATE_DIRECTORY_${config} "temp/${config}")
+  link_directories("${OUTPUT_DIRECTORY}/${config}")
+endforeach ()
+
+include(DownloadProject.cmake)
+
+download_project(PROJ SFML
+  GIT_REPOSITORY      https://github.com/SFML/SFML
+  GIT_TAG             b7be4b2
+  ${UPDATE_DISCONNECTED_IF_AVAILABLE}
+)
+add_subdirectory(${SFML_SOURCE_DIR} ${SFML_BINARY_DIR})
+include_directories("${SFML_SOURCE_DIR}/include")
+
+
+file(GLOB_RECURSE SOURCE_FILES src/*.cpp src/*.h)
+add_executable(Astral_Insanity_main ${SOURCE_FILES})
+
+#copy General resources to build post build script
+add_custom_command(TARGET Astral_Insanity_main POST_BUILD  
+  COMMAND ${CMAKE_COMMAND} -E copy_directory  "${PROJECT_SOURCE_DIR}/res" $<TARGET_FILE_DIR:Astral_Insanity_main>/res)
+
+if(${MSVC})
+  #set outDir as debugging directory
+  #This doesn't work yet?
+  #set_target_properties(Astral_Insanity_main PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "$(TargetDir)")
+  
+  file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/Astral_Insanity_main.vcxproj.user" 
+    "<?xml version=\"1.0\" encoding=\"utf-8\"?>
+    <Project ToolsVersion=\"4.0\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">
+    <PropertyGroup Condition=\"'$(Configuration)|$(Platform)'=='Debug|x64'\">
+      <LocalDebuggerWorkingDirectory>$(TargetDir)</LocalDebuggerWorkingDirectory>
+      <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    </PropertyGroup>
+    <PropertyGroup Condition=\"'$(Configuration)|$(Platform)'=='Release|x64'\">
+      <LocalDebuggerWorkingDirectory>$(TargetDir)</LocalDebuggerWorkingDirectory>
+      <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    </PropertyGroup>
+  </Project>")
+		
+  target_compile_options(Astral_Insanity_main PUBLIC /MP)
+  target_link_libraries(Astral_Insanity_main 
+    optimized sfml-graphics sfml-audio sfml-window sfml-system 
+    debug sfml-graphics-d sfml-audio-d sfml-window-d sfml-system-d)
+else()
+  target_link_libraries(Astral_Insanity_main 
+    optimized sfml-graphics sfml-audio sfml-window sfml-system 
+	debug sfml-graphics-d sfml-audio-d sfml-window-d sfml-system-d)
+endif()
+add_dependencies(Astral_Insanity_main sfml-graphics)
