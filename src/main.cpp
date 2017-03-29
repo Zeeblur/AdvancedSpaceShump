@@ -1,37 +1,54 @@
+#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <stdexcept>
-#include <SFML/Graphics.hpp>
 
-sf::Texture texture;
+using namespace sf;
 
+Texture texture;
+Sprite sprite;
 void Load() {
   if (!texture.loadFromFile("res/img/spaceship1.png")) {
     throw std::invalid_argument("Loading error!");
   }
 }
 
-int main(){
-  sf::RenderWindow window(sf::VideoMode(400, 400), "SFML works!");
+void Update() {
+  Vector2f move;
+  if (Keyboard::isKeyPressed(Keyboard::Left)) {
+    move.x--;
+  }
+  if (Keyboard::isKeyPressed(Keyboard::Right)) {
+    move.x++;
+  }
+  sprite.move(move);
+}
+
+void Render(RenderWindow &window) { window.draw(sprite); }
+
+int main() {
+  RenderWindow window(VideoMode(400, 400), "SFML works!");
 
   try {
     Load();
-  }
-  catch (const std::exception&) {
+  } catch (const std::exception &) {
     std::cerr << "Load error" << std::endl;
     return 1;
   }
 
-  while (window.isOpen())
-  {
-    sf::Event event;
-    while (window.pollEvent(event))
-    {
-      if (event.type == sf::Event::Closed)
+  sprite.setTexture(texture);
+  sprite.setScale(Vector2f(2.f, 2.f));
+
+  while (window.isOpen()) {
+    Event event;
+    while (window.pollEvent(event)) {
+      if (event.type == Event::Closed)
         window.close();
     }
-
     window.clear();
-
+    //
+    Update();
+    Render(window);
+    //
     window.display();
   }
 
