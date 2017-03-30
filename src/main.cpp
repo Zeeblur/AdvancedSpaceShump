@@ -13,6 +13,8 @@ void Load() {
 }
 
 void Update() {
+  static sf::Clock clock;
+  float dt = clock.restart().asSeconds();
   Vector2f move;
   if (Keyboard::isKeyPressed(Keyboard::Left)) {
     move.x--;
@@ -20,7 +22,7 @@ void Update() {
   if (Keyboard::isKeyPressed(Keyboard::Right)) {
     move.x++;
   }
-  sprite.move(move);
+  sprite.move(move*300.0f*dt);
 }
 
 void Render(RenderWindow &window) { window.draw(sprite); }
@@ -41,14 +43,17 @@ int main() {
   while (window.isOpen()) {
     Event event;
     while (window.pollEvent(event)) {
-      if (event.type == Event::Closed)
+      if (event.type == Event::Closed){
         window.close();
+      }
     }
+    if (Keyboard::isKeyPressed(Keyboard::Escape)) {
+      window.close();
+    }
+
     window.clear();
-    //
     Update();
     Render(window);
-    //
     window.display();
   }
 
