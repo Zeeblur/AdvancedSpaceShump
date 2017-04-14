@@ -60,12 +60,16 @@ if(${MSVC})
   </Project>")
 		
   target_compile_options(Astral_Insanity_main PUBLIC /MP)
-  target_link_libraries(Astral_Insanity_main 
-    optimized sfml-graphics sfml-audio sfml-window sfml-system 
-    debug sfml-graphics-d sfml-audio-d sfml-window-d sfml-system-d)
+
 else()
-  target_link_libraries(Astral_Insanity_main 
-    optimized sfml-graphics sfml-audio sfml-window sfml-system 
-	debug sfml-graphics-d sfml-audio-d sfml-window-d sfml-system-d)
+
 endif()
+target_link_libraries(Astral_Insanity_main 
+  optimized sfml-graphics debug sfml-graphics-d 
+  optimized sfml-audio debug sfml-audio-d 
+  optimized sfml-window debug sfml-window-d 
+  optimized sfml-system debug sfml-system-d 
+  optimized sfml-graphics debug sfml-graphics-d
+ )
+
 add_dependencies(Astral_Insanity_main sfml-graphics)
