@@ -1,5 +1,6 @@
 #include "GameState.h"
 
+using namespace std;
 
 GameState::GameState(sf::RenderWindow &wind) : mainWindow(wind)
 {
@@ -10,8 +11,8 @@ void GameState::Update()
 	// need to change keyboard to inpu/events to check with window focus.
 	if (Keyboard::isKeyPressed(Keyboard::B) && !previousKeyState)
 	{
-		std::cerr << "big window" << std::endl;
-
+		std::cout << "big window" << std::endl;
+		VideoMode dmodes =  VideoMode::getDesktopMode();
 	}
 
 	// used to control only 1 key press
