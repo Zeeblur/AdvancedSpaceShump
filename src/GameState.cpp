@@ -40,7 +40,7 @@ int GameState::LoadGamefiles()
 
 	// set image sprite
 	sprite.setTexture(texture);
-	sprite.setScale(Vector2f(2.f, 2.f));
+	sprite.setScale(Vector2f(20.f, 20.f));
 
 	return 0;
 }
