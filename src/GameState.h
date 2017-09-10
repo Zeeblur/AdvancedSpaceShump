@@ -16,27 +16,60 @@ enum gameState
 	OPTIONS
 };
 
+struct GameObject
+{
+	Vector2f position;
+	std::unique_ptr<FloatRect> boundingBox = nullptr;
+	
+	virtual void Render(const RenderWindow &window) {}
+	virtual ~GameObject() = 0; 
+
+};
+
+struct SpriteObject : public GameObject
+{
+	std::unique_ptr<Sprite> sprite;
+
+	//using GameObject::GameObject;
+
+	SpriteObject(Sprite *spr);
+
+	~SpriteObject()	{ delete &sprite; }
+
+	void Render(RenderWindow &window) const;
+};
+
+
+struct TextObject : GameObject
+{
+	std::unique_ptr<Text> text;
+
+	TextObject(Text *text);
+	TextObject() { delete &text; }
+
+	void Render(RenderWindow &window) const;
+};
+
 class GameState
 {
 private:
-
-	// reference to the window
-	sf::RenderWindow &mainWindow;
-
 	gameState currentState;
-	Texture texture;
-	Sprite sprite;
-	bool previousKeyState;
 
-
+protected:
+	std::vector<GameObject*> stateObjects;
 	
-
 public:
+	// abstract class deconstruction
+	GameState() = default;
+	virtual ~GameState() {}
 
-	GameState(sf::RenderWindow &wind);
+	// update changes per implementation
+	virtual void Update() = 0;
 
-	int LoadGamefiles();
-	void Update();
-	void Render();
+	// Render function always the same
+	void Render(RenderWindow &window) const;
+
+	void AddObject(GameObject *go);
 
 };
+
