@@ -4,12 +4,40 @@ using namespace std;
 
 StartState::StartState()
 {
-
+	Init();
 }
 
 StartState::~StartState()
 {
 
+}
+
+void StartState::Init()
+{
+	auto a = CreateText("hello");
+
+	stateObjects.push_back(&a);
+	//AddObject(&CreateText("hello"));
+}
+
+TextObject StartState::CreateText(String s)
+{
+	Text testText;
+
+	testText.setString(s);
+	testText.setFont(titleFont);
+	testText.setCharacterSize(50);
+	testText.setStyle(Text::Bold);
+	testText.setColor(Color::White);
+
+	// set origin to middle of object
+	testText.setOrigin(Vector2f(testText.getLocalBounds().width / 2.f, testText.getLocalBounds().height / 2.f));
+
+	//// set pos to middle of screen 
+
+	//testText.setPosition(mainView.getSize());
+
+	return TextObject(testText);
 }
 
 void StartState::Update()

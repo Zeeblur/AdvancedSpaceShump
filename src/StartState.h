@@ -10,7 +10,15 @@ using namespace sf;
 class StartState : public GameState
 {
 private:
-	Text hudText;
+	Text titleTxt;
+	Text optionsTxt;
+	Text playTxt;
+	Text exitTxt;
+
+	void Init();
+	TextObject CreateText(String s);
+
+	Font titleFont;
 	
 public:
 	StartState();

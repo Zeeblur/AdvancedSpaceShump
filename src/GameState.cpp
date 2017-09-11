@@ -2,14 +2,18 @@
 
 void GameState::Render(RenderWindow &window) const
 {
+	std::cout << "render gs.cpp" << std::endl;
 	// for each game object. Render
-	for(GameObject *go : stateObjects)
-	{
-		go->Render(window);
-	}
+	//for(GameObject *go : stateObjects)
+	//{
+	//	go->Render(window);
+	//}
+
+	stateObjects[0]->Render(window);
+
 }
 
-void GameState::AddObject(GameObject *go)
+void GameState::AddObject(const GameObject &go)
 {
-	stateObjects.push_back(go);
+	//stateObjects.push_back(&go);
 }
