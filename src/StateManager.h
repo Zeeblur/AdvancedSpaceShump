@@ -29,7 +29,7 @@ private:
 	sf::RenderWindow &mainWindow;
 	View mainView;
 
-	GameState* currentState = nullptr;
+	stateType currentState;
 
 	// list of states.
 	std::array<GameState*, 4> states = {};

@@ -19,7 +19,7 @@ int main()
 	// modes[0].bitsPerPixel = desktop.bitsPerPixel;
 	// use best quality first 
 	// the first element will always give the best mode (higher width, height and bits-per-pixel).
-	RenderWindow window(modes[0], "Advanced Space Shump", Style::None);
+	RenderWindow window(modes[15], "Advanced Space Shump", Style::None);
 
 	//int newH = (1920*modes[i].width)/modes[i].height;
 	//int displace = (newH - 1080)/(-2);
@@ -43,7 +43,7 @@ int main()
 		}
 
 		// update and render window
-		window.clear(Color::White);
+		window.clear(Color::Red);
 		newGame.Update();
 		newGame.Render();
 		window.display();

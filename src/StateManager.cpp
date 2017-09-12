@@ -14,14 +14,12 @@ StateManager::StateManager(sf::RenderWindow &wind) : mainWindow(wind)
 
 void StateManager::InitialiseStates()
 {
-	StartState* start = new StartState();
-	states[stateType::START] = start;
+	states[stateType::START] = new StartState();// (const View &view);
 
-	PlayState* play = new PlayState();
-	states[stateType::PLAY] = play;
+	states[stateType::PLAY] = new PlayState();
 
 	// set initial state to start state
-	currentState = start;
+	currentState = START;
 }
 
 void StateManager::Update()
@@ -30,7 +28,7 @@ void StateManager::Update()
 
 void StateManager::Render()
 {
-	currentState->Render(mainWindow);
+	states[currentState]->Render(mainWindow);
 }
 
 // return 1 if loading failed.

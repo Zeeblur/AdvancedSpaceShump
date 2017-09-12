@@ -16,12 +16,13 @@ private:
 	Text exitTxt;
 
 	void Init();
-	TextObject CreateText(String s);
+	TextObject* CreateText(String s);
+	SpriteObject* CreateSprite();
 
 	Font titleFont;
 	
 public:
-	StartState();
+	StartState();// (const View &view);
 	~StartState();
 	
 	void Update();

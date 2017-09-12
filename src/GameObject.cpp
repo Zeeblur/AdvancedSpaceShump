@@ -1,18 +1,19 @@
 #include "GameState.h"
 
-//GameObject::~GameObject(){}
+GameObject::~GameObject(){}
 
 // Sprite object
 
-SpriteObject::SpriteObject(Sprite *spr) : sprite(std::unique_ptr<Sprite>(spr))
+SpriteObject::SpriteObject(const Sprite &spr) : sprite(spr)
 {
-	boundingBox = FloatRect(sprite->getLocalBounds());
+	boundingBox = FloatRect(sprite.getLocalBounds());
 	position = Vector2f(boundingBox.left, boundingBox.top);
 }
 
-void SpriteObject::Render(RenderWindow &window) const
+void SpriteObject::Render(RenderWindow &window)
 {
-	window.draw(*sprite);
+	//std::cout << "spritetyy" << std::endl;
+	window.draw(sprite);
 }
 
 
@@ -31,7 +32,8 @@ TextObject::TextObject(const TextObject& other)
 }
 
 
-void TextObject::Render(RenderWindow &window) const
+void TextObject::Render(RenderWindow &window)
 {
+	//std::cout << "texty" << std::endl;
 	window.draw(text);
 }

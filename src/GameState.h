@@ -12,22 +12,20 @@ struct GameObject
 	Vector2f position;
 	FloatRect boundingBox;
 	
-	virtual void Render(const RenderWindow &window) {}
-	//virtual ~GameObject() = 0; 
+	virtual void Render(RenderWindow &window) {}
+	virtual ~GameObject() = 0; 
 
 };
 
 struct SpriteObject : public GameObject
 {
-	std::unique_ptr<Sprite> sprite;
+	Sprite sprite;
 
 	//using GameObject::GameObject;
 
-	SpriteObject(Sprite *spr);
+	SpriteObject(const Sprite &spr);
 
-	~SpriteObject()	{ delete &sprite; }
-
-	void Render(RenderWindow &window) const;
+	void Render(RenderWindow &window) override;
 };
 
 
@@ -39,7 +37,7 @@ struct TextObject : GameObject
 
 	TextObject(const TextObject& other);
 
-	void Render(RenderWindow &window) const;
+	void Render(RenderWindow &window) override;
 };
 
 class GameState
@@ -47,9 +45,10 @@ class GameState
 private:
 	//stateType currentState;
 
+
 protected:
 	std::vector<GameObject*> stateObjects;
-	
+	View* view;
 public:
 	// abstract class deconstruction
 	GameState() = default;

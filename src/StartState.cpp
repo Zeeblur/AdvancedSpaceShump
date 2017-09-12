@@ -2,7 +2,7 @@
 
 using namespace std;
 
-StartState::StartState()
+StartState::StartState()//(const View &viw) : view(viw)
 {
 	Init();
 }
@@ -14,30 +14,47 @@ StartState::~StartState()
 
 void StartState::Init()
 {
-	auto a = CreateText("hello");
+	titleFont.loadFromFile("res/fonts/ka1.ttf");
+	auto a = CreateText("yo suck suck my mem leaks pidgeon");
 
-	stateObjects.push_back(&a);
+	stateObjects.push_back(a);
+
+	//stateObjects.push_back(CreateSprite());
 	//AddObject(&CreateText("hello"));
 }
 
-TextObject StartState::CreateText(String s)
+TextObject* StartState::CreateText(String s)
 {
 	Text testText;
 
 	testText.setString(s);
 	testText.setFont(titleFont);
-	testText.setCharacterSize(50);
+	testText.setCharacterSize(20);
 	testText.setStyle(Text::Bold);
-	testText.setColor(Color::White);
+	testText.setColor(Color::Black);
 
 	// set origin to middle of object
 	testText.setOrigin(Vector2f(testText.getLocalBounds().width / 2.f, testText.getLocalBounds().height / 2.f));
 
 	//// set pos to middle of screen 
 
-	//testText.setPosition(mainView.getSize());
+	testText.setPosition(Vector2f(50.f, 50.f));//view->getSize());
 
-	return TextObject(testText);
+	return new TextObject(testText);
+}
+
+SpriteObject* StartState::CreateSprite()
+{
+	Sprite sprite;
+
+	Texture texture;
+	texture.loadFromFile("res/img/spaceship1.png");
+	// set image sprite
+	sprite.setTexture(texture);
+	sprite.setScale(Vector2f(20.f, 20.f));
+	sprite.setPosition(Vector2f(0.f, 0.f));
+
+	return new SpriteObject(sprite);
 }
 
 void StartState::Update()
@@ -98,9 +115,6 @@ void StartState::Update()
 //
 //	
 //
-//	// set image sprite
-//	sprite.setTexture(texture);
-//	sprite.setScale(Vector2f(20.f, 20.f));
-//	sprite.setPosition(Vector2f(0.f, 0.f));
+
 //	return 0;
 //}
