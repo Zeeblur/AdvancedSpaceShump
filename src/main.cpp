@@ -80,7 +80,7 @@ int main()
 			if (event.type == sf::Event::Resized)
 				view = getLetterboxView(view, event.size.width, event.size.height);
 
-			newGame.Update();// event, window);
+
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Escape)) {
 			window.close();
@@ -97,7 +97,7 @@ int main()
 		window.clear();
 
 		window.setView(view);
-
+		newGame.Update();// event, window);
 		newGame.Render();
 		window.display();
 	}

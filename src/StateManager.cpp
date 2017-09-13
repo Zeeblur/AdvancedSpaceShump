@@ -1,6 +1,5 @@
 #include "StateManager.h"
 
-
 using namespace std;
 
 StateManager::StateManager(sf::RenderWindow &wind) : mainWindow(wind)
@@ -24,6 +23,7 @@ void StateManager::InitialiseStates()
 
 void StateManager::Update()
 {
+	
 	states[currentState]->Update();
 }
 

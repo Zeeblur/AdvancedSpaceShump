@@ -39,8 +39,6 @@ struct TextObject : GameObject
 {
 	Text text;
 
-	
-
 	TextObject(const Text &text);
 
 	void Render(RenderWindow &window) override;
