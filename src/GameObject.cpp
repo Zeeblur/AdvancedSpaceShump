@@ -58,17 +58,20 @@ InteractiveObject::InteractiveObject(TextObject* textObj, SpriteObject* spriteOb
 
 	// fit size of shape to text.
 	shapeWidth = text->boundingBox.width * 2.0f;
-	shapeHeight = text->boundingBox.height * 2.0f;
+	shapeHeight = text->boundingBox.height * 2.0f;	//boundingBox.left = backshape.getPosition().x;
+	//boundingBox.top = backshape.getPosition().y;
 
 
 	backshape = RectangleShape(Vector2f(shapeWidth, shapeHeight));
-	backshape.setFillColor(sf::Color(100, 250, 50));
-
+	backshape.setOutlineColor(Color::White);
+	backshape.setOutlineThickness(2.0f);
 	backshape.setPosition(Vector2f(200, 200));
 
 	// centre text to shape
 	text->setPosition(Vector2f(200, 200) +Vector2f(shapeWidth / 2.0f, shapeHeight / 2.0f));
 
+	// set bounding box
+	boundingBox = FloatRect(backshape.getPosition().x, backshape.getPosition().y, shapeWidth, shapeHeight);
 
 }
 
@@ -87,9 +90,40 @@ void InteractiveObject::Render(RenderWindow &window)
 
 }
 
+void InteractiveObject::Click()
+{
+
+}
+
+void InteractiveObject::HoverGraphics(const bool &val)
+{
+	if (val)
+	{
+		// if hovering alter style
+		backshape.setFillColor(Color::White);
+
+		text->text.setColor(Color::Black);
+
+		if (Mouse::isButtonPressed(Mouse::Left) && !previousMouseState)
+		{
+			std::cout << "clicked button" << std::endl;
+			Click();
+		}
+	}
+	else
+	{
+		backshape.setFillColor(Color::Transparent);
+		text->text.setColor(Color::White);
+	}
+
+	previousMouseState = Mouse::isButtonPressed(Mouse::Left);
+}
+
+
 void InteractiveObject::Update()
 {
 	// update each object within interactive
+	HoverGraphics(boundingBox.contains(Vector2f(Mouse::getPosition())));
 
 	if (text != nullptr)
 		text->Update();
@@ -97,3 +131,4 @@ void InteractiveObject::Update()
 	if (sprite != nullptr)
 		sprite->Update();
 }
+

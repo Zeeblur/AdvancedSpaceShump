@@ -1,0 +1,19 @@
+/home/zoe/bin/clion-2017.2.2/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/zoe/advancedspaceshump
+-- Downloading/updating SFML
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/zoe/advancedspaceshump/cmake-build-debug/SFML-download
+Scanning dependencies of target SFML-download
+[ 11%] Performing update step for 'SFML-download'
+[ 22%] No configure step for 'SFML-download'
+[ 33%] No build step for 'SFML-download'
+[ 44%] No install step for 'SFML-download'
+[ 55%] No test step for 'SFML-download'
+[ 66%] Completed 'SFML-download'
+[100%] Built target SFML-download
+-- libudev stable: 1
+-- Found UDev: /lib/x86_64-linux-gnu/libudev.so
+--    include: /usr/include
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/zoe/advancedspaceshump/cmake-build-debug

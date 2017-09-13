@@ -52,9 +52,12 @@ struct InteractiveObject : GameObject
 	TextObject* textShadow = nullptr;
 
 	RectangleShape backshape;
+	bool previousMouseState;
 	
 	InteractiveObject(TextObject* textObj = nullptr, SpriteObject* spriteObj = nullptr);
 
 	void Render(RenderWindow &window) override;
 	void Update();//(Event& e, RenderWindow& window);
+	void HoverGraphics(const bool &val);
+	void Click();
 };

@@ -1,0 +1,11 @@
+# Hashes of file build rules.
+1de7b4b7aa9c4a759cd865017a84255a CMakeFiles/SFML-download
+639ac6505b208eb78b8bc61294f6ffdf CMakeFiles/SFML-download-complete
+dde04eb6a9ac4e299a8b9cc5044509f4 SFML-download-prefix/src/SFML-download-stamp/SFML-download-build
+e06eb8725ac1c0317f1aa029e38a588c SFML-download-prefix/src/SFML-download-stamp/SFML-download-configure
+2c1bff7b4cd7b9610cb01d7fb94e156b SFML-download-prefix/src/SFML-download-stamp/SFML-download-download
+c260d6a1bccded124e82d3325950a022 SFML-download-prefix/src/SFML-download-stamp/SFML-download-install
+1421a9d39bf0634b8fe6f5b298ad52a6 SFML-download-prefix/src/SFML-download-stamp/SFML-download-mkdir
+c0ae9fb8f32a028a4f0470cf7029c277 SFML-download-prefix/src/SFML-download-stamp/SFML-download-patch
+de2b4a68bd68366fac11e1d960efad99 SFML-download-prefix/src/SFML-download-stamp/SFML-download-test
+5706770681037a0ac9385a0f0c74d69d SFML-download-prefix/src/SFML-download-stamp/SFML-download-update

@@ -53,7 +53,8 @@ TextObject* StartState::CreateText(String s, Vector2f displacement)
 SpriteObject* StartState::CreateSprite()
 {
 	Sprite sprite;
-
+	//boundingBox.left = backshape.getPosition().x;
+	//boundingBox.top = backshape.getPosition().y;
 
 	// set image sprite
 	sprite.setTexture(texture);

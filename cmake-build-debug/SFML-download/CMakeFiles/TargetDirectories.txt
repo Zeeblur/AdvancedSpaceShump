@@ -1,0 +1,3 @@
+/home/zoe/advancedspaceshump/cmake-build-debug/SFML-download/CMakeFiles/edit_cache.dir
+/home/zoe/advancedspaceshump/cmake-build-debug/SFML-download/CMakeFiles/rebuild_cache.dir
+/home/zoe/advancedspaceshump/cmake-build-debug/SFML-download/CMakeFiles/SFML-download.dir

@@ -72,4 +72,4 @@ target_link_libraries(Astral_Insanity_main
   optimized sfml-graphics debug sfml-graphics-d
  )
 
-add_dependencies(Astral_Insanity_main sfml-graphics)
+add_dependencies(Astral_Insanity_main sfml-graphics sfml-audio)
