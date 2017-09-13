@@ -2,7 +2,7 @@
 
 using namespace std;
 
-StartState::StartState()//(const View &viw) : view(viw)
+StartState::StartState(const Vector2f &view) : viewSize(view)
 {
 	Init();
 }
@@ -14,16 +14,23 @@ StartState::~StartState()
 
 void StartState::Init()
 {
+	// load font
 	titleFont.loadFromFile("res/fonts/ka1.ttf");
-	auto a = CreateText("yo suck suck my mem leaks pidgeon");
 
-	stateObjects.push_back(a);
+	texture.loadFromFile("res/img/testbkg.jpg");
+	stateObjects.push_back(CreateSprite());
 
-	//stateObjects.push_back(CreateSprite());
+	// create title buttons
+	stateObjects.push_back(CreateText("Swan Fighter 2000", Vector2f(0.f, -100.f)));
+	stateObjects.push_back(CreateText("Play"));
+	stateObjects.push_back(CreateText("Options", Vector2f(0.f, 50.f)));
+	stateObjects.push_back(CreateText("Quit", Vector2f(0.f, 100.f)));
+
+	stateObjects.push_back(new InteractiveObject(CreateText("Ree")));
 	//AddObject(&CreateText("hello"));
 }
 
-TextObject* StartState::CreateText(String s)
+TextObject* StartState::CreateText(String s, Vector2f displacement)
 {
 	Text testText;
 
@@ -31,14 +38,14 @@ TextObject* StartState::CreateText(String s)
 	testText.setFont(titleFont);
 	testText.setCharacterSize(20);
 	testText.setStyle(Text::Bold);
-	testText.setColor(Color::Black);
+	testText.setColor(Color::White);
 
 	// set origin to middle of object
 	testText.setOrigin(Vector2f(testText.getLocalBounds().width / 2.f, testText.getLocalBounds().height / 2.f));
 
-	//// set pos to middle of screen 
+	//// set pos to middle of screen then add displacement 
 
-	testText.setPosition(Vector2f(50.f, 50.f));//view->getSize());
+	testText.setPosition((viewSize/2.0f)+ displacement);
 
 	return new TextObject(testText);
 }
@@ -47,21 +54,29 @@ SpriteObject* StartState::CreateSprite()
 {
 	Sprite sprite;
 
-	Texture texture;
-	texture.loadFromFile("res/img/spaceship1.png");
+
 	// set image sprite
 	sprite.setTexture(texture);
-	sprite.setScale(Vector2f(20.f, 20.f));
-	sprite.setPosition(Vector2f(0.f, 0.f));
+	sprite.setScale(Vector2f(2.f, 2.f));
+	sprite.setOrigin(Vector2f(sprite.getLocalBounds().width / 2.f, sprite.getLocalBounds().height / 2.f));
+	sprite.setPosition(viewSize/2.0f);
 
 	return new SpriteObject(sprite);
 }
 
 void StartState::Update()
 {
-	cout << "update start" << endl;
+	for (GameObject* go : stateObjects)
+	{
+		go->Update();
+	}
 }
 
+//
+//void StartState::UpdateViewSize(const Vector2f &size)
+//{
+//	viewSize = size;
+//}
 
 
 //

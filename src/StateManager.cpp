@@ -14,7 +14,7 @@ StateManager::StateManager(sf::RenderWindow &wind) : mainWindow(wind)
 
 void StateManager::InitialiseStates()
 {
-	states[stateType::START] = new StartState();// (const View &view);
+	states[stateType::START] = new StartState(mainView.getSize());// (const View &view);
 
 	states[stateType::PLAY] = new PlayState();
 
@@ -24,6 +24,7 @@ void StateManager::InitialiseStates()
 
 void StateManager::Update()
 {
+	states[currentState]->Update();
 }
 
 void StateManager::Render()

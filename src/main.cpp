@@ -6,7 +6,42 @@
 
 bool prevkey;
 bool prevkey2;
+float origX, origY = 1.0f;
 
+sf::View getLetterboxView(sf::View view, int windowWidth, int windowHeight) {
+
+	// Compares the aspect ratio of the window to the aspect ratio of the view,
+	// and sets the view's viewport accordingly in order to archieve a letterbox effect.
+	// A new view (with a new viewport set) is returned.
+
+	float windowRatio = windowWidth / (float)windowHeight;
+	float viewRatio = view.getSize().x / (float)view.getSize().y;
+	float sizeX = 1;
+	float sizeY = 1;
+	float posX = 0;
+	float posY = 0;
+
+	bool horizontalSpacing = true;
+	if (windowRatio < viewRatio)
+		horizontalSpacing = false;
+
+	// If horizontalSpacing is true, the black bars will appear on the left and right side.
+	// Otherwise, the black bars will appear on the top and bottom.
+
+	if (horizontalSpacing) {
+		sizeX = viewRatio / windowRatio;
+		posX = (1 - sizeX) / 2.f;
+	}
+
+	else {
+		sizeY = windowRatio / viewRatio;
+		posY = (1 - sizeY) / 2.f;
+	}
+
+	view.setViewport(sf::FloatRect(posX, posY, sizeX, sizeY));
+
+	return view;
+}
 
 
 int main()
@@ -19,12 +54,15 @@ int main()
 	// modes[0].bitsPerPixel = desktop.bitsPerPixel;
 	// use best quality first 
 	// the first element will always give the best mode (higher width, height and bits-per-pixel).
-	RenderWindow window(modes[15], "Advanced Space Shump", Style::None);
+	RenderWindow window(modes[0], "Advanced Space Shump", Style::None);
 
-	//int newH = (1920*modes[i].width)/modes[i].height;
-	//int displace = (newH - 1080)/(-2);
+	float resX = modes[0].width;
+	float resY = modes[0].height;
 
-	//window.setView(sf::View(sf::FloatRect(0, displace, 1920, newH)));
+	sf::View view;
+	view.setSize(resX, resY);
+	view.setCenter(view.getSize().x / 2, view.getSize().y / 2);
+	view = getLetterboxView(view, resX, resY);
 
 	// set up gamestate with window load files and check for errors
 	StateManager newGame = StateManager(window);
@@ -37,14 +75,29 @@ int main()
 			if (event.type == Event::Closed) {
 				window.close();
 			}
+
+
+			if (event.type == sf::Event::Resized)
+				view = getLetterboxView(view, event.size.width, event.size.height);
+
+			newGame.Update();// event, window);
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Escape)) {
 			window.close();
 		}
 
+		if (Keyboard::isKeyPressed(Keyboard::P))
+		{
+			window.close();
+			window.create(modes[15], "Adv");
+			view = getLetterboxView(view, modes[15].width, modes[15].height);
+		}
+
 		// update and render window
-		window.clear(Color::Red);
-		newGame.Update();
+		window.clear();
+
+		window.setView(view);
+
 		newGame.Render();
 		window.display();
 	}
