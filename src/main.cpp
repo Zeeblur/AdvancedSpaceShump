@@ -4,10 +4,6 @@
 #include "StateManager.h"
 
 
-bool prevkey;
-bool prevkey2;
-float origX, origY = 1.0f;
-
 sf::View getLetterboxView(sf::View view, int windowWidth, int windowHeight) {
 
 	// Compares the aspect ratio of the window to the aspect ratio of the view,
@@ -38,13 +34,10 @@ sf::View getLetterboxView(sf::View view, int windowWidth, int windowHeight) {
 		posY = (1 - sizeY) / 2.f;
 	}
 
-	auto a = view.getViewport();
-
 	view.setViewport(sf::FloatRect(posX, posY, sizeX, sizeY));
 
 	return view;
 }
-
 
 int main()
 {
@@ -58,6 +51,9 @@ int main()
 	// the first element will always give the best mode (higher width, height and bits-per-pixel).
 	RenderWindow window(modes[0], "Advanced Space Shump", Style::Resize);
 
+	// cap frames
+	window.setVerticalSyncEnabled(true);
+
 	float resX = modes[0].width;
 	float resY = modes[0].height;
 
@@ -65,6 +61,7 @@ int main()
 	view.setSize(resX, resY);
 	view.setCenter(view.getSize().x / 2, view.getSize().y / 2);
 	view = getLetterboxView(view, resX, resY);
+
 
 	// set up gamestate with window load files and check for errors
 	StateManager newGame = StateManager(window);
@@ -90,16 +87,18 @@ int main()
 
 		if (Keyboard::isKeyPressed(Keyboard::P))
 		{
-			window.close();
-			window.create(modes[15], "Adv");
-			view = getLetterboxView(view, modes[15].width, modes[15].height);
+			Vector2u size = Vector2u(modes[15].width, modes[15].height);
+			window.setSize(size);
+
+			Vector2i pos = Vector2i((modes[0].width / 2)-(size.x /2), (modes[0].height / 2)-(size.y/2));
+			window.setPosition(pos);
 		}
 
 		// update and render window
 		window.clear();
 
 		window.setView(view);
-		newGame.Update();// event, window);
+		newGame.Update();
 		newGame.Render();
 		window.display();
 	}
