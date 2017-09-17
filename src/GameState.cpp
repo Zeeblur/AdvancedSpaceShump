@@ -1,5 +1,6 @@
 #include "GameState.h"
 #include "GameObject.h"
+#include "StateManager.h"
 
 void GameState::Render(RenderWindow &window) const
 {
@@ -16,7 +17,7 @@ void GameState::AddObject(const GameObject &go)
 	//stateObjects.push_back(&go);
 }
 
-void GameState::Click()
+void GameState::Click(utils::stateType &val) 
 {
-
+	parent->Click(val);
 }

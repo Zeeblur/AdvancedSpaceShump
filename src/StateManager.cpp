@@ -15,7 +15,7 @@ StateManager::StateManager(sf::RenderWindow &wind) : mainWindow(wind)
 
 void StateManager::InitialiseStates()
 {
-	states[(int)stateType::START] = new StartState(mainView.getSize());// (const View &view);
+	states[(int)stateType::START] = new StartState(*this, mainView);
 
 	states[(int)stateType::PLAY] = new PlayState();
 
@@ -42,16 +42,12 @@ int StateManager::LoadGamefiles()
 	return 0;
 }
 
-void StateManager::Click(const InteractiveObject &obj)
+void StateManager::Click(stateType &choice)
 {
 	// menu click has happened.
-
-	////switch state
-	//switch (switch_on)
-	//{
-	//default:
-	//	break;
-	//}
+	stateType newChoice = choice;
+	//switch state
+	currentState = (int)newChoice;
 }
 
 

@@ -3,15 +3,18 @@
 #include <iostream>
 #include <array>
 #include <memory>
+
 #include "GameState.h"
 #include "StartState.h"
 #include "PlayState.h"
 #include "utils.h"
 
 
+
 using namespace sf;
 
 // GameState stores the state of the game/menu screens windows etc.
+//class GameState;
 
 class StateManager
 {
@@ -43,6 +46,6 @@ public:
 	void Update();
 	void Render();
 
-	void Click(const InteractiveObject &obj);
+	void Click(utils::stateType &choice);
 
 };

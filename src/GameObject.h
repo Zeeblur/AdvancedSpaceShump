@@ -7,8 +7,6 @@
 using namespace sf;
 
 // GameObjects Base class and concrete versions.
-
-// fwd declare
 class GameState;
 
 struct GameObject
@@ -26,7 +24,7 @@ struct GameObject
 
 protected:
 	Vector2f position;
-	const GameState* _parentState;
+	GameState* _parentState;
 };
 
 struct SpriteObject : public GameObject
@@ -35,7 +33,7 @@ struct SpriteObject : public GameObject
 
 	//using GameObject::GameObject;
 
-	SpriteObject(const Sprite &spr, const GameState& parent);
+	SpriteObject(Sprite &spr, GameState& parent);
 
 	void Render(RenderWindow &window) override;
 };
@@ -45,7 +43,7 @@ struct TextObject : GameObject
 {
 	Text text;
 
-	TextObject(const Text &text, const GameState& parent);
+	TextObject(const Text &text, GameState& parent);
 
 	void Render(RenderWindow &window) override;
 	void Update() override;
@@ -61,7 +59,7 @@ struct InteractiveObject : GameObject
 	RectangleShape backshape;
 	bool previousMouseState;
 	
-	InteractiveObject(const GameState& parent, TextObject* textObj = nullptr, SpriteObject* spriteObj = nullptr);
+	InteractiveObject(GameState& parent, TextObject* textObj = nullptr, SpriteObject* spriteObj = nullptr);
 
 	void Render(RenderWindow &window) override;
 	void Update();//(Event& e, RenderWindow& window);

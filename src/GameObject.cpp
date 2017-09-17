@@ -1,10 +1,46 @@
 #include "GameObject.h"
+#include "StateManager.h"
 
 GameObject::~GameObject(){}
 
+TextObject* GameState::CreateText(String s, Vector2f displacement)
+{
+	Text testText;
+
+	testText.setString(s);
+	testText.setFont(*mainFont);
+	testText.setCharacterSize(20);
+	testText.setStyle(Text::Bold);
+	testText.setColor(Color::White);
+
+	// set origin to middle of object
+	testText.setOrigin(Vector2f(testText.getLocalBounds().width / 2.f, testText.getLocalBounds().height / 2.f));
+
+	//// set pos to middle of screen then add displacement 
+
+	testText.setPosition((mainView->getSize() / 2.0f) + displacement);
+
+	return new TextObject(testText, *this);
+}
+
+SpriteObject* GameState::CreateSprite(const Texture& texture)
+{
+	Sprite sprite;
+	//boundingBox.left = backshape.getPosition().x;
+	//boundingBox.top = backshape.getPosition().y;
+
+	// set image sprite
+	sprite.setTexture(texture);
+	sprite.setScale(Vector2f(2.f, 2.f));
+	sprite.setOrigin(Vector2f(sprite.getLocalBounds().width / 2.f, sprite.getLocalBounds().height / 2.f));
+	sprite.setPosition(mainView->getSize() / 2.0f);
+
+	return new SpriteObject(sprite, *this);
+}
+
 // Sprite object
 
-SpriteObject::SpriteObject(const Sprite &spr, const GameState& parent) : sprite(spr)
+SpriteObject::SpriteObject(Sprite &spr, GameState& parent) : sprite(spr)
 {
 	boundingBox = FloatRect(sprite.getLocalBounds());
 	position = Vector2f(boundingBox.left, boundingBox.top);
@@ -21,7 +57,7 @@ void SpriteObject::Render(RenderWindow &window)
 
 // Text object
 
-TextObject::TextObject(const Text &txt, const GameState& parent) : text(txt)
+TextObject::TextObject(const Text &txt, GameState& parent) : text(txt)
 {
 	boundingBox = FloatRect(text.getLocalBounds());
 	position = Vector2f(text.getPosition()); 
@@ -53,7 +89,7 @@ void GameObject::setPosition(const Vector2f &newPos)
 	dirty = true;
 }
 
-InteractiveObject::InteractiveObject(const GameState& parent, TextObject* textObj, SpriteObject* spriteObj) : text(textObj), sprite(spriteObj)
+InteractiveObject::InteractiveObject(GameState& parent, TextObject* textObj, SpriteObject* spriteObj) : text(textObj), sprite(spriteObj)
 {
 	float shapeWidth = 100.0f;
 	float shapeHeight = 50.0f;
@@ -94,7 +130,8 @@ void InteractiveObject::Render(RenderWindow &window)
 
 void InteractiveObject::Click()
 {
-	std::cout << "Clicked: " << (int)buttonValue << std::endl;
+	// Clicked this button type.
+	_parentState->Click(buttonValue);
 }
 
 void InteractiveObject::HoverGraphics(const bool &val)
@@ -133,4 +170,5 @@ void InteractiveObject::Update()
 	if (sprite != nullptr)
 		sprite->Update();
 }
+
 

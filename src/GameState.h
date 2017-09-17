@@ -2,6 +2,8 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <memory>
+#include "utils.h"
+
 
 using namespace sf;
 
@@ -9,16 +11,25 @@ using namespace sf;
 
 // forward declare game objects
 class GameObject;
+class TextObject;
+class SpriteObject;
+class StateManager;
 
 class GameState
 {
-private:
-	//stateType currentState;
-
-
 protected:
 	std::vector<GameObject*> stateObjects;
-	View* view;
+	View* mainView;
+
+	// state manager reference 
+	StateManager* parent;
+
+	// current default
+	Font* mainFont;
+
+	// creating objects
+	TextObject* CreateText(String s, Vector2f displacement = Vector2f(0.f, 0.f));
+	SpriteObject* CreateSprite(const Texture &texture);
 public:
 	// abstract class deconstruction
 	GameState() = default;
@@ -32,7 +43,7 @@ public:
 
 	void AddObject(const GameObject &go);
 
-	void Click();
+	void Click(utils::stateType &val);
 
 };
 
