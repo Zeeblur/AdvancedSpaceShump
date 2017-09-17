@@ -3,54 +3,12 @@
 
 GameObject::~GameObject(){}
 
-TextObject* GameState::CreateText(String s, Vector2f displacement)
-{
-	Text testText;
-
-	testText.setString(s);
-	testText.setFont(*mainFont);
-	testText.setCharacterSize(100);
-	testText.setStyle(Text::Bold);
-	testText.setColor(Color::White);
-
-	// set origin to middle of object
-	testText.setOrigin(Vector2f(testText.getLocalBounds().width / 2.f, testText.getLocalBounds().height / 2.f));
-
-	//// set pos to middle of screen then add displacement 
-
-	testText.setPosition((mainView->getSize() / 2.0f) + displacement);
-
-	return new TextObject(testText, *this);
-}
-
-SpriteObject* GameState::CreateSprite(const Texture& texture)
-{
-	Sprite sprite;
-	//boundingBox.left = backshape.getPosition().x;
-	//boundingBox.top = backshape.getPosition().y;
-
-	// set image sprite
-	sprite.setTexture(texture);
-
-	// background size
-	Vector2f scale = Vector2f(mainView->getSize().x / sprite.getLocalBounds().width,
-							  mainView->getSize().y / sprite.getLocalBounds().height);
-	sprite.setScale(scale);
-
-	//targetSize.x / yourSprite.getLocalBounds().width,
-	//sprite.setScale(Vector2f(2.f, 2.f));
-	sprite.setOrigin(Vector2f(sprite.getLocalBounds().width / 2.f, sprite.getLocalBounds().height / 2.f));
-	sprite.setPosition(mainView->getSize() / 2.0f);
-
-	return new SpriteObject(sprite, *this);
-}
-
 // Sprite object
 
 SpriteObject::SpriteObject(Sprite &spr, GameState& parent) : sprite(spr)
 {
 	boundingBox = FloatRect(sprite.getLocalBounds());
-	position = Vector2f(boundingBox.left, boundingBox.top);
+	position = Vector2f(sprite.getPosition());
 	_parentState = &parent;
 }
 
@@ -60,7 +18,18 @@ void SpriteObject::Render(RenderWindow &window)
 	window.draw(sprite);
 }
 
+void SpriteObject::Update()
+{
+	
+	if (!dirty)
+		return;
 
+	sprite.setPosition(position);
+
+	boundingBox = FloatRect(sprite.getLocalBounds());
+
+	dirty = false;
+}
 
 // Text object
 
@@ -93,6 +62,12 @@ void TextObject::Update()
 void GameObject::setPosition(const Vector2f &newPos)
 {
 	position = newPos;
+	dirty = true;
+}
+
+void GameObject::addPos(const Vector2f &newPos)
+{
+	position += newPos;
 	dirty = true;
 }
 

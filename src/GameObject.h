@@ -21,6 +21,7 @@ struct GameObject
 	bool dirty = true;  // flag for updates
 
 	void setPosition(const Vector2f &newPoss);
+	void addPos(const Vector2f &newPoss);
 
 protected:
 	Vector2f position;
@@ -36,6 +37,7 @@ struct SpriteObject : public GameObject
 	SpriteObject(Sprite &spr, GameState& parent);
 
 	void Render(RenderWindow &window) override;
+	void Update();
 };
 
 
@@ -62,7 +64,7 @@ struct InteractiveObject : GameObject
 	InteractiveObject(GameState& parent, TextObject* textObj = nullptr, SpriteObject* spriteObj = nullptr);
 
 	void Render(RenderWindow &window) override;
-	void Update();//(Event& e, RenderWindow& window);
+	void Update();
 	void HoverGraphics(const bool &val);
 	void Click();
 };

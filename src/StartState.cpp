@@ -26,7 +26,9 @@ void StartState::Init()
 	mainFont = &titleFont;
 
 	texture.loadFromFile("res/img/testbkg.jpg");
-	stateObjects.push_back(CreateSprite(texture));
+	Vector2f bkgScale = Vector2f(mainView->getSize().x / texture.getSize().x,
+		mainView->getSize().y / texture.getSize().y);
+	stateObjects.push_back(CreateSprite(texture, bkgScale));
 
 	// create title buttons
 	stateObjects.push_back(CreateText("Swan Fighter 2000", Vector2f(0.f, -900.f)));

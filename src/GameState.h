@@ -21,7 +21,6 @@ protected:
 	std::vector<GameObject*> stateObjects;
 	View* mainView;
 
-
 	// state manager reference 
 	StateManager* parent;
 
@@ -30,7 +29,9 @@ protected:
 
 	// creating objects
 	TextObject* CreateText(String s, Vector2f displacement = Vector2f(0.f, 0.f));
-	SpriteObject* CreateSprite(const Texture &texture);
+	
+	// sprites
+	SpriteObject* CreateSprite(const Texture &texture, Vector2f scale = Vector2f(1.0f, 1.0f), IntRect sourceRect = IntRect());
 
 	virtual void Init() = 0;
 public:
