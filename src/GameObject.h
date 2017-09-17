@@ -2,13 +2,18 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <memory>
+#include "utils.h"
 
 using namespace sf;
 
 // GameObjects Base class and concrete versions.
 
+// fwd declare
+class GameState;
+
 struct GameObject
 {
+
 	FloatRect boundingBox;
 
 	virtual void Render(RenderWindow &window) {}
@@ -17,10 +22,11 @@ struct GameObject
 
 	bool dirty = true;  // flag for updates
 
-	void setPosition(const Vector2f &newPos);
+	void setPosition(const Vector2f &newPoss);
 
 protected:
 	Vector2f position;
+	const GameState* _parentState;
 };
 
 struct SpriteObject : public GameObject
@@ -29,7 +35,7 @@ struct SpriteObject : public GameObject
 
 	//using GameObject::GameObject;
 
-	SpriteObject(const Sprite &spr);
+	SpriteObject(const Sprite &spr, const GameState& parent);
 
 	void Render(RenderWindow &window) override;
 };
@@ -39,7 +45,7 @@ struct TextObject : GameObject
 {
 	Text text;
 
-	TextObject(const Text &text);
+	TextObject(const Text &text, const GameState& parent);
 
 	void Render(RenderWindow &window) override;
 	void Update() override;
@@ -47,6 +53,7 @@ struct TextObject : GameObject
 
 struct InteractiveObject : GameObject
 {
+	utils::stateType buttonValue;
 	SpriteObject* sprite;
 	TextObject* text;
 	TextObject* textShadow = nullptr;
@@ -54,7 +61,7 @@ struct InteractiveObject : GameObject
 	RectangleShape backshape;
 	bool previousMouseState;
 	
-	InteractiveObject(TextObject* textObj = nullptr, SpriteObject* spriteObj = nullptr);
+	InteractiveObject(const GameState& parent, TextObject* textObj = nullptr, SpriteObject* spriteObj = nullptr);
 
 	void Render(RenderWindow &window) override;
 	void Update();//(Event& e, RenderWindow& window);

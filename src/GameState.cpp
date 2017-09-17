@@ -15,3 +15,8 @@ void GameState::AddObject(const GameObject &go)
 {
 	//stateObjects.push_back(&go);
 }
+
+void GameState::Click()
+{
+
+}

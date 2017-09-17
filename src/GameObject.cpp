@@ -4,10 +4,11 @@ GameObject::~GameObject(){}
 
 // Sprite object
 
-SpriteObject::SpriteObject(const Sprite &spr) : sprite(spr)
+SpriteObject::SpriteObject(const Sprite &spr, const GameState& parent) : sprite(spr)
 {
 	boundingBox = FloatRect(sprite.getLocalBounds());
 	position = Vector2f(boundingBox.left, boundingBox.top);
+	_parentState = &parent;
 }
 
 void SpriteObject::Render(RenderWindow &window)
@@ -20,10 +21,11 @@ void SpriteObject::Render(RenderWindow &window)
 
 // Text object
 
-TextObject::TextObject(const Text &txt) : text(txt)
+TextObject::TextObject(const Text &txt, const GameState& parent) : text(txt)
 {
 	boundingBox = FloatRect(text.getLocalBounds());
 	position = Vector2f(text.getPosition()); 
+	_parentState = &parent;
 }
 
 void TextObject::Render(RenderWindow &window)
@@ -51,16 +53,14 @@ void GameObject::setPosition(const Vector2f &newPos)
 	dirty = true;
 }
 
-InteractiveObject::InteractiveObject(TextObject* textObj, SpriteObject* spriteObj) : text(textObj), sprite(spriteObj)
+InteractiveObject::InteractiveObject(const GameState& parent, TextObject* textObj, SpriteObject* spriteObj) : text(textObj), sprite(spriteObj)
 {
 	float shapeWidth = 100.0f;
 	float shapeHeight = 50.0f;
 
 	// fit size of shape to text.
 	shapeWidth = text->boundingBox.width * 2.0f;
-	shapeHeight = text->boundingBox.height * 2.0f;	//boundingBox.left = backshape.getPosition().x;
-	//boundingBox.top = backshape.getPosition().y;
-
+	shapeHeight = text->boundingBox.height * 2.0f;
 
 	backshape = RectangleShape(Vector2f(shapeWidth, shapeHeight));
 	backshape.setOutlineColor(Color::White);
@@ -73,6 +73,8 @@ InteractiveObject::InteractiveObject(TextObject* textObj, SpriteObject* spriteOb
 	// set bounding box
 	boundingBox = FloatRect(backshape.getPosition().x, backshape.getPosition().y, shapeWidth, shapeHeight);
 
+	// ghet parent
+	_parentState = &parent;
 }
 
 void InteractiveObject::Render(RenderWindow &window)
@@ -92,7 +94,7 @@ void InteractiveObject::Render(RenderWindow &window)
 
 void InteractiveObject::Click()
 {
-
+	std::cout << "Clicked: " << (int)buttonValue << std::endl;
 }
 
 void InteractiveObject::HoverGraphics(const bool &val)

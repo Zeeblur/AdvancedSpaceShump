@@ -6,20 +6,12 @@
 #include "GameState.h"
 #include "StartState.h"
 #include "PlayState.h"
+#include "utils.h"
 
 
 using namespace sf;
 
 // GameState stores the state of the game/menu screens windows etc.
-
-// possible enum for state
-enum stateType
-{
-	START,
-	PLAY,
-	PAUSE,
-	OPTIONS
-};
 
 class StateManager
 {
@@ -29,7 +21,7 @@ private:
 	sf::RenderWindow &mainWindow;
 	View mainView;
 
-	stateType currentState;
+	unsigned int currentState;
 
 	// list of states.
 	std::array<GameState*, 4> states = {};
@@ -50,5 +42,7 @@ public:
 	int LoadGamefiles();
 	void Update();
 	void Render();
+
+	void Click(const InteractiveObject &obj);
 
 };

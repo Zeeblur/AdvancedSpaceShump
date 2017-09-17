@@ -1,6 +1,8 @@
 #include "StateManager.h"
+#include "utils.h"
 
 using namespace std;
+using namespace utils;
 
 StateManager::StateManager(sf::RenderWindow &wind) : mainWindow(wind)
 {
@@ -13,17 +15,16 @@ StateManager::StateManager(sf::RenderWindow &wind) : mainWindow(wind)
 
 void StateManager::InitialiseStates()
 {
-	states[stateType::START] = new StartState(mainView.getSize());// (const View &view);
+	states[(int)stateType::START] = new StartState(mainView.getSize());// (const View &view);
 
-	states[stateType::PLAY] = new PlayState();
+	states[(int)stateType::PLAY] = new PlayState();
 
 	// set initial state to start state
-	currentState = START;
+	currentState = (int)stateType::START;
 }
 
 void StateManager::Update()
 {
-	
 	states[currentState]->Update();
 }
 
@@ -39,6 +40,18 @@ int StateManager::LoadGamefiles()
 
 	// continue game
 	return 0;
+}
+
+void StateManager::Click(const InteractiveObject &obj)
+{
+	// menu click has happened.
+
+	////switch state
+	//switch (switch_on)
+	//{
+	//default:
+	//	break;
+	//}
 }
 
 

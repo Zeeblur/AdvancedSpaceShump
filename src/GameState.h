@@ -32,5 +32,7 @@ public:
 
 	void AddObject(const GameObject &go);
 
+	void Click();
+
 };
 

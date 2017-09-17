@@ -1,4 +1,5 @@
 #include "StartState.h"
+#include "utils.h"
 
 using namespace std;
 
@@ -26,7 +27,9 @@ void StartState::Init()
 	stateObjects.push_back(CreateText("Options", Vector2f(0.f, 50.f)));
 	stateObjects.push_back(CreateText("Quit", Vector2f(0.f, 100.f)));
 
-	stateObjects.push_back(new InteractiveObject(CreateText("Ree")));
+	InteractiveObject* buttonPlay = new InteractiveObject(*this, CreateText("Ree"));
+	buttonPlay->buttonValue = utils::stateType::PLAY;
+	stateObjects.push_back(buttonPlay);
 	//AddObject(&CreateText("hello"));
 }
 
@@ -47,7 +50,7 @@ TextObject* StartState::CreateText(String s, Vector2f displacement)
 
 	testText.setPosition((viewSize/2.0f)+ displacement);
 
-	return new TextObject(testText);
+	return new TextObject(testText, *this);
 }
 
 SpriteObject* StartState::CreateSprite()
@@ -62,7 +65,7 @@ SpriteObject* StartState::CreateSprite()
 	sprite.setOrigin(Vector2f(sprite.getLocalBounds().width / 2.f, sprite.getLocalBounds().height / 2.f));
 	sprite.setPosition(viewSize/2.0f);
 
-	return new SpriteObject(sprite);
+	return new SpriteObject(sprite, *this);
 }
 
 void StartState::Update()
