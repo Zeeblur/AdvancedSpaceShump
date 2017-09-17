@@ -8,6 +8,7 @@ namespace utils
 		START,
 		PLAY,
 		PAUSE,
-		OPTIONS
+		OPTIONS,
+		QUIT
 	};
 }

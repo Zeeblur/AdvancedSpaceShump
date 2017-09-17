@@ -9,7 +9,7 @@ TextObject* GameState::CreateText(String s, Vector2f displacement)
 
 	testText.setString(s);
 	testText.setFont(*mainFont);
-	testText.setCharacterSize(20);
+	testText.setCharacterSize(100);
 	testText.setStyle(Text::Bold);
 	testText.setColor(Color::White);
 
@@ -31,7 +31,14 @@ SpriteObject* GameState::CreateSprite(const Texture& texture)
 
 	// set image sprite
 	sprite.setTexture(texture);
-	sprite.setScale(Vector2f(2.f, 2.f));
+
+	// background size
+	Vector2f scale = Vector2f(mainView->getSize().x / sprite.getLocalBounds().width,
+							  mainView->getSize().y / sprite.getLocalBounds().height);
+	sprite.setScale(scale);
+
+	//targetSize.x / yourSprite.getLocalBounds().width,
+	//sprite.setScale(Vector2f(2.f, 2.f));
 	sprite.setOrigin(Vector2f(sprite.getLocalBounds().width / 2.f, sprite.getLocalBounds().height / 2.f));
 	sprite.setPosition(mainView->getSize() / 2.0f);
 
@@ -95,19 +102,22 @@ InteractiveObject::InteractiveObject(GameState& parent, TextObject* textObj, Spr
 	float shapeHeight = 50.0f;
 
 	// fit size of shape to text.
-	shapeWidth = text->boundingBox.width * 2.0f;
+	shapeWidth = text->boundingBox.width + (text->boundingBox.width * 0.3f);
 	shapeHeight = text->boundingBox.height * 2.0f;
 
 	backshape = RectangleShape(Vector2f(shapeWidth, shapeHeight));
 	backshape.setOutlineColor(Color::White);
 	backshape.setOutlineThickness(2.0f);
-	backshape.setPosition(Vector2f(200, 200));
 
 	// centre text to shape
-	text->setPosition(Vector2f(200, 200) +Vector2f(shapeWidth / 2.0f, shapeHeight / 2.0f));
+	Vector2f buttonPos = (text->text.getPosition() - Vector2f(shapeWidth / 2.0f, shapeHeight / 2.0f));
+	backshape.setPosition(buttonPos);
 
 	// set bounding box
-	boundingBox = FloatRect(backshape.getPosition().x, backshape.getPosition().y, shapeWidth, shapeHeight);
+	boundingBox = backshape.getGlobalBounds();// FloatRect(backshape.getPosition().x, backshape.getPosition().y, shapeWidth, shapeHeight);
+
+	//auto a = 
+	
 
 	// ghet parent
 	_parentState = &parent;
@@ -138,6 +148,10 @@ void InteractiveObject::HoverGraphics(const bool &val)
 {
 	if (val)
 	{
+
+
+		auto a = Mouse::getPosition(*_parentState->mainWindow);
+
 		// if hovering alter style
 		backshape.setFillColor(Color::White);
 
@@ -161,14 +175,21 @@ void InteractiveObject::HoverGraphics(const bool &val)
 
 void InteractiveObject::Update()
 {
-	// update each object within interactive
-	HoverGraphics(boundingBox.contains(Vector2f(Mouse::getPosition())));
 
 	if (text != nullptr)
 		text->Update();
 
 	if (sprite != nullptr)
 		sprite->Update();
+
+
+	// ensure mouse positon is relative to the viewport
+	auto mousePos = _parentState->mainWindow->mapPixelToCoords(Mouse::getPosition(*_parentState->mainWindow));
+
+	// update each object within interactive
+	HoverGraphics(boundingBox.contains(Vector2f(mousePos)));
+
+
 }
 
 

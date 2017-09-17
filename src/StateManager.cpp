@@ -15,9 +15,9 @@ StateManager::StateManager(sf::RenderWindow &wind) : mainWindow(wind)
 
 void StateManager::InitialiseStates()
 {
-	states[(int)stateType::START] = new StartState(*this, mainView);
+	states[(int)stateType::START] = new StartState(*this, mainView, mainWindow);
 
-	states[(int)stateType::PLAY] = new PlayState();
+	states[(int)stateType::PLAY] = new PlayState(*this, mainView, mainWindow);
 
 	// set initial state to start state
 	currentState = (int)stateType::START;
@@ -46,6 +46,10 @@ void StateManager::Click(stateType &choice)
 {
 	// menu click has happened.
 	stateType newChoice = choice;
+
+	if (choice == stateType::QUIT)
+		return;
+
 	//switch state
 	currentState = (int)newChoice;
 }

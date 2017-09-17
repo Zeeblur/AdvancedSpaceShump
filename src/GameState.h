@@ -21,6 +21,7 @@ protected:
 	std::vector<GameObject*> stateObjects;
 	View* mainView;
 
+
 	// state manager reference 
 	StateManager* parent;
 
@@ -30,6 +31,8 @@ protected:
 	// creating objects
 	TextObject* CreateText(String s, Vector2f displacement = Vector2f(0.f, 0.f));
 	SpriteObject* CreateSprite(const Texture &texture);
+
+	virtual void Init() = 0;
 public:
 	// abstract class deconstruction
 	GameState() = default;
@@ -44,6 +47,8 @@ public:
 	void AddObject(const GameObject &go);
 
 	void Click(utils::stateType &val);
+
+	RenderWindow* mainWindow;
 
 };
 

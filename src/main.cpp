@@ -38,6 +38,8 @@ sf::View getLetterboxView(sf::View view, int windowWidth, int windowHeight) {
 		posY = (1 - sizeY) / 2.f;
 	}
 
+	auto a = view.getViewport();
+
 	view.setViewport(sf::FloatRect(posX, posY, sizeX, sizeY));
 
 	return view;
@@ -54,7 +56,7 @@ int main()
 	// modes[0].bitsPerPixel = desktop.bitsPerPixel;
 	// use best quality first 
 	// the first element will always give the best mode (higher width, height and bits-per-pixel).
-	RenderWindow window(modes[0], "Advanced Space Shump", Style::None);
+	RenderWindow window(modes[0], "Advanced Space Shump", Style::Resize);
 
 	float resX = modes[0].width;
 	float resY = modes[0].height;

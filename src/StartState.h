@@ -17,7 +17,7 @@ private:
 	Font titleFont;
 
 public:
-	StartState(StateManager &val, View &view);
+	StartState(StateManager &val, View &view, RenderWindow &win);
 	~StartState();
 
 
