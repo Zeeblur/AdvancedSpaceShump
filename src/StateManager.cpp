@@ -23,9 +23,9 @@ void StateManager::InitialiseStates()
 	currentState = (int)stateType::START;
 }
 
-void StateManager::Update()
+void StateManager::Update(const float& dt)
 {
-	states[currentState]->Update();
+	states[currentState]->Update(dt);
 }
 
 void StateManager::Render()

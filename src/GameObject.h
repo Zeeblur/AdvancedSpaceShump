@@ -15,7 +15,7 @@ struct GameObject
 	FloatRect boundingBox;
 
 	virtual void Render(RenderWindow &window) {}
-	virtual void Update() {}
+	virtual void Update(const float &dt) {}
 	virtual ~GameObject() = 0; 
 
 	bool dirty = true;  // flag for updates
@@ -25,6 +25,7 @@ struct GameObject
 
 protected:
 	Vector2f position;
+	Vector2f movement;
 	GameState* _parentState;
 };
 
@@ -37,7 +38,7 @@ struct SpriteObject : public GameObject
 	SpriteObject(Sprite &spr, GameState& parent);
 
 	void Render(RenderWindow &window) override;
-	void Update();
+	void Update(const float& dt);
 };
 
 
@@ -48,7 +49,7 @@ struct TextObject : GameObject
 	TextObject(const Text &text, GameState& parent);
 
 	void Render(RenderWindow &window) override;
-	void Update() override;
+	void Update(const float& dt) override;
 };
 
 struct InteractiveObject : GameObject
@@ -64,7 +65,7 @@ struct InteractiveObject : GameObject
 	InteractiveObject(GameState& parent, TextObject* textObj = nullptr, SpriteObject* spriteObj = nullptr);
 
 	void Render(RenderWindow &window) override;
-	void Update();
+	void Update(const float& dt);
 	void HoverGraphics(const bool &val);
 	void Click();
 };

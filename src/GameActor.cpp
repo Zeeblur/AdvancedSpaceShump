@@ -14,10 +14,10 @@ GameActor::~GameActor()
 
 }
 
-void GameActor::Update()
+void GameActor::Update(const float& dt)
 {
-	// simple movement sim
-	//renderObject->addPos(Vector2f(1.f, 1.f));
+
+	// command pattern
 	Command* command = inputHandler.HandleInput();
 
 	if (command)
@@ -30,4 +30,9 @@ void GameActor::Update()
 void GameActor::FireGun()
 {
 	std::cout << "pew pew" << std::endl;
+}
+
+void GameActor::Move(sf::Vector2f& dir)
+{
+	renderObject->addPos(dir);
 }

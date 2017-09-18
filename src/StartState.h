@@ -24,5 +24,5 @@ public:
 	//void UpdateViewSize(const Vector2f &size);
 
 	
-	void Update();
+	void Update(const float& dt);
 };

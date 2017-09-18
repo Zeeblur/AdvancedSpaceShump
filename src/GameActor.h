@@ -18,6 +18,7 @@ public:
 	GameActor(std::string val, GameObject& obj);
 	~GameActor();
 
-	void Update();
+	void Update(const float& dt);
 	void FireGun();
+	void Move(sf::Vector2f& dir);
 };

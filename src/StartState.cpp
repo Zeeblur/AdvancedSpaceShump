@@ -47,10 +47,10 @@ void StartState::Init()
 	stateObjects.push_back(buttonQuit);
 }
 
-void StartState::Update()
+void StartState::Update(const float& dt)
 {
 	for (GameObject* go : stateObjects)
 	{
-		go->Update();
+		go->Update(dt);
 	}
 }

@@ -10,13 +10,13 @@ PlayState::PlayState(StateManager &val, View &view, RenderWindow &win)
 	Init();
 }
 
-void PlayState::Update()
+void PlayState::Update(const float& dt)
 {
-	player->Update();
+	player->Update(dt);
 
 	for (GameObject* go : stateObjects)
 	{
-		go->Update();
+		go->Update(dt);
 	}
 }
 

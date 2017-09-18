@@ -23,6 +23,6 @@ public:
 	PlayState(StateManager &val, View &view, RenderWindow &win);
 	~PlayState() {}
 	//int LoadGamefiles();
-	void Update();
+	void Update(const float& dt);
 	void Init();
 };

@@ -14,3 +14,11 @@ struct FireCommand : public Command
 {
 	virtual void execute(GameActor& actor);
 };
+
+struct MoveCommand : public Command
+{
+	sf::Vector2f dir;
+	virtual void execute(GameActor& actor);
+
+	MoveCommand(sf::Vector2f& direction);
+};

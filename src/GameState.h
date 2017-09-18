@@ -40,7 +40,7 @@ public:
 	virtual ~GameState() {}
 
 	// update changes per implementation
-	virtual void Update() = 0;
+	virtual void Update(const float& dt) = 0;
 
 	// Render function always the same
 	void Render(RenderWindow &window) const;

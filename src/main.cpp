@@ -98,7 +98,11 @@ int main()
 		window.clear();
 
 		window.setView(view);
-		newGame.Update();
+
+		static sf::Clock clock;
+		float dt = clock.restart().asSeconds();
+
+		newGame.Update(dt);
 		newGame.Render();
 		window.display();
 	}

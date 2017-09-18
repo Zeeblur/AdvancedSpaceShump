@@ -3,6 +3,19 @@
 
 GameObject::~GameObject(){}
 
+void GameObject::setPosition(const Vector2f &newPos)
+{
+	position = newPos;
+	dirty = true;
+}
+
+void GameObject::addPos(const Vector2f &newPos)
+{
+	movement = newPos;
+	dirty = true;
+}
+
+
 // Sprite object
 
 SpriteObject::SpriteObject(Sprite &spr, GameState& parent) : sprite(spr)
@@ -18,18 +31,21 @@ void SpriteObject::Render(RenderWindow &window)
 	window.draw(sprite);
 }
 
-void SpriteObject::Update()
+void SpriteObject::Update(const float& dt)
 {
 	
 	if (!dirty)
 		return;
 
-	sprite.setPosition(position);
+
+	sprite.move(movement*300.0f*dt);
+	
 
 	boundingBox = FloatRect(sprite.getLocalBounds());
 
 	dirty = false;
 }
+
 
 // Text object
 
@@ -46,7 +62,7 @@ void TextObject::Render(RenderWindow &window)
 	window.draw(text);
 }
 
-void TextObject::Update()
+void TextObject::Update(const float& dt)
 {
 	if (!dirty)
 		return;
@@ -58,18 +74,6 @@ void TextObject::Update()
 
 
 // InteractiveObject - base style can customize later
-
-void GameObject::setPosition(const Vector2f &newPos)
-{
-	position = newPos;
-	dirty = true;
-}
-
-void GameObject::addPos(const Vector2f &newPos)
-{
-	position += newPos;
-	dirty = true;
-}
 
 InteractiveObject::InteractiveObject(GameState& parent, TextObject* textObj, SpriteObject* spriteObj) : text(textObj), sprite(spriteObj)
 {
@@ -147,15 +151,14 @@ void InteractiveObject::HoverGraphics(const bool &val)
 	previousMouseState = Mouse::isButtonPressed(Mouse::Left);
 }
 
-
-void InteractiveObject::Update()
+void InteractiveObject::Update(const float& dt)
 {
 
 	if (text != nullptr)
-		text->Update();
+		text->Update(dt);
 
 	if (sprite != nullptr)
-		sprite->Update();
+		sprite->Update(dt);
 
 
 	// ensure mouse positon is relative to the viewport

@@ -43,7 +43,7 @@ public:
 	~StateManager();
 
 	int LoadGamefiles();
-	void Update();
+	void Update(const float& dt);
 	void Render();
 
 	void Click(utils::stateType &choice);
