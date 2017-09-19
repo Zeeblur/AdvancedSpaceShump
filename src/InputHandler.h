@@ -2,7 +2,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-
 class Command;
 class FireCommand;
 
@@ -16,7 +15,7 @@ private:
 	Command* buttonShoot_;
 
 public:
-	Command* HandleInput();
+	std::vector<Command*> HandleInput();
 	InputHandler();
 	void MapButtons();
 };

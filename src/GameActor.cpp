@@ -18,12 +18,10 @@ void GameActor::Update(const float& dt)
 {
 
 	// command pattern
-	Command* command = inputHandler.HandleInput();
+	std::vector<Command*> commands = inputHandler.HandleInput();
 
-	if (command)
-	{
-		command->execute(*this);
-	}
+	for (Command* com : commands)
+		com->execute(*this);
 	
 }
 
@@ -34,5 +32,5 @@ void GameActor::FireGun()
 
 void GameActor::Move(sf::Vector2f& dir)
 {
-	renderObject->addPos(dir);
+	renderObject->addImpulse(dir);
 }

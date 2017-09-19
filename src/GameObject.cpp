@@ -9,10 +9,16 @@ void GameObject::setPosition(const Vector2f &newPos)
 	dirty = true;
 }
 
-void GameObject::addPos(const Vector2f &newPos)
+void GameObject::addImpulse(const Vector2f &direction)
 {
-	movement = newPos;
-	dirty = true;
+	moveSpeed += Vector2f(direction.x * acceleration.x, direction.y * acceleration.y);
+	moveReq = true;
+
+	// limit movement
+	if (moveSpeed.x > maxSpeed) moveSpeed.x = maxSpeed;
+	if (moveSpeed.x < -maxSpeed) moveSpeed.x = -maxSpeed;
+	if (moveSpeed.y > maxSpeed) moveSpeed.y = maxSpeed;
+	if (moveSpeed.y < -maxSpeed) moveSpeed.y = -maxSpeed;
 }
 
 
@@ -33,17 +39,31 @@ void SpriteObject::Render(RenderWindow &window)
 
 void SpriteObject::Update(const float& dt)
 {
-	
-	if (!dirty)
-		return;
+	// if no input request. Decelerate
+	if (!moveReq)
+	{
+		std::cout << moveSpeed.x << ", " << moveSpeed.y << std::endl;
+		// lateral movement
+		if (moveSpeed.x < 0) moveSpeed.x += deceleration.x;
+		if (moveSpeed.x > 0) moveSpeed.x -= deceleration.x;
 
+		// if speed within epsilon of zero. Reset to zero
+		if (moveSpeed.x > 0 && moveSpeed.x <  deceleration.x) moveSpeed.x = 0;
+		if (moveSpeed.x < 0 && moveSpeed.x > -deceleration.x) moveSpeed.x = 0;
 
-	sprite.move(movement*300.0f*dt);
-	
+		// vertical movement
+		if (moveSpeed.y < 0) moveSpeed.y += deceleration.y;
+		if (moveSpeed.y > 0) moveSpeed.y -= deceleration.y;
 
+		// if speed within epsilon of zero. Reset to zero
+		if (moveSpeed.y > 0 && moveSpeed.y < deceleration.y) moveSpeed.y = 0;
+		if (moveSpeed.y < 0 && moveSpeed.y > -deceleration.y) moveSpeed.y = 0;
+	}
+
+	// update pos
+	sprite.move(moveSpeed*dt);
 	boundingBox = FloatRect(sprite.getLocalBounds());
-
-	dirty = false;
+	moveReq = false;
 }
 
 

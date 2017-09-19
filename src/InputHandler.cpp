@@ -6,21 +6,23 @@ InputHandler::InputHandler()
 	MapButtons();
 }
 
-Command* InputHandler::HandleInput()
+std::vector<Command*> InputHandler::HandleInput()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) return buttonShoot_;
+	std::vector<Command*> commands;
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) commands.push_back(buttonShoot_);
 
 	if (sf::Joystick::isConnected(0))
 	{
 		
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) return buttonUp_;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) return buttonDown_;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) return buttonLeft_;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) return buttonRight_;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) commands.push_back(buttonUp_);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) commands.push_back(buttonDown_);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) commands.push_back(buttonLeft_);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) commands.push_back(buttonRight_);
 
-	return NULL;
+	return commands;
 }
 
 void InputHandler::MapButtons()
