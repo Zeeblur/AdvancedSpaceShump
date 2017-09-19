@@ -21,6 +21,16 @@ void GameObject::addImpulse(const Vector2f &direction)
 	if (moveSpeed.y < -maxSpeed) moveSpeed.y = -maxSpeed;
 }
 
+bool GameObject::CheckCollision(GameObject *other)
+{
+	// check collision with this object
+
+	auto play = dynamic_cast<SpriteObject*>(this);
+	auto enemy = dynamic_cast<SpriteObject*>(other);
+
+	return play->sprite.getGlobalBounds().intersects(enemy->sprite.getGlobalBounds());
+}
+
 // Sprite object
 
 SpriteObject::SpriteObject(Sprite &spr, GameState& parent) : sprite(spr)
@@ -32,7 +42,12 @@ SpriteObject::SpriteObject(Sprite &spr, GameState& parent) : sprite(spr)
 
 void SpriteObject::Render(RenderWindow &window)
 {
-	//std::cout << "spritetyy" << std::endl;
+	// debug draw bounding boxes.
+	//auto rect = RectangleShape(Vector2f(sprite.getGlobalBounds().width, sprite.getGlobalBounds().height));
+	//rect.setPosition(sprite.getPosition());
+	//window.draw(rect);
+
+
 	window.draw(sprite);
 }
 

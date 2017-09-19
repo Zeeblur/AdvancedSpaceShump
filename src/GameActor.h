@@ -10,7 +10,7 @@ class Command;
 class GameActor
 {
 private:
-	GameObject* renderObject;
+
 	InputHandler inputHandler;
 
 
@@ -21,4 +21,5 @@ public:
 	void Update(const float& dt);
 	void FireGun();
 	void Move(sf::Vector2f& dir);
+	GameObject* renderObject;
 };

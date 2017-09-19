@@ -51,6 +51,8 @@ int main()
 	// the first element will always give the best mode (higher width, height and bits-per-pixel).
 	RenderWindow window(modes[0], "Advanced Space Shump", Style::Resize);
 
+    std::cout << modes[0].width << std::endl;
+
 	// cap frames
 	window.setVerticalSyncEnabled(true);
 

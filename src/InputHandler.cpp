@@ -35,8 +35,12 @@ void InputHandler::MapButtons()
 	//}
 
 	buttonShoot_ = new FireCommand;
-	buttonDown_ = new MoveCommand(sf::Vector2f(0.f, 1.f));
-	buttonLeft_ = new MoveCommand(sf::Vector2f(-1.f, 0.f));
-	buttonRight_ = new MoveCommand(sf::Vector2f(1.f, 0.f));
-	buttonUp_ = new MoveCommand(sf::Vector2f(0.f, -1.f));
+	auto down = sf::Vector2f(0.f, 1.f);
+	buttonDown_ = new MoveCommand(down);
+    auto left = sf::Vector2f(-1.f, 0.f);
+	buttonLeft_ = new MoveCommand(left);
+    auto right = sf::Vector2f(1.f, 0.f);
+	buttonRight_ = new MoveCommand(right);
+    auto up = sf::Vector2f(0.f, -1.f);
+	buttonUp_ = new MoveCommand(up);
 }

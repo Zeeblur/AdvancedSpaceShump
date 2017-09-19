@@ -26,9 +26,10 @@ protected:
 
 	// current default
 	Font* mainFont;
+	float defaultTextSize;
 
 	// creating objects
-	TextObject* CreateText(String s, Vector2f displacement = Vector2f(0.f, 0.f));
+	TextObject* CreateText(String s, float textSize, Vector2f displacement = Vector2f(0.f, 0.f));
 	
 	// sprites
 	SpriteObject* CreateSprite(const Texture &texture, Vector2f scale = Vector2f(1.0f, 1.0f), Vector2f pos = Vector2f(0.0f, 0.0f), IntRect sourceRect = IntRect());

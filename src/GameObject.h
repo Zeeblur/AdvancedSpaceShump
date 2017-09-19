@@ -23,6 +23,8 @@ struct GameObject
 	void setPosition(const Vector2f &newPoss);
 	void addImpulse(const Vector2f &direction);
 
+	bool CheckCollision(GameObject* other);
+
 protected:
 	Vector2f position;
 	GameState* _parentState;

@@ -6,7 +6,6 @@
 #include "GameState.h"
 #include "GameObject.h"
 #include "GameActor.h"
-#include "SpawnerAI.h"
 
 
 using namespace sf;
@@ -27,6 +26,8 @@ private:
 	Clock timer;
 	float time = 0.f;
 	float maxTime = 400;
+
+    float ratio;
 
 	bool first = true;
 

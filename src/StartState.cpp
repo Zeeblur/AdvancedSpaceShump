@@ -21,6 +21,14 @@ StartState::~StartState()
 
 void StartState::Init()
 {
+    auto ratio = 3840/mainWindow->getSize().x;
+    ratio = ratio*2;
+
+	// set size dependent on window
+	defaultTextSize = 100 / ratio;
+
+
+
 	// load font
 	titleFont.loadFromFile("res/fonts/ka1.ttf");
 	mainFont = &titleFont;
@@ -28,21 +36,21 @@ void StartState::Init()
 	texture.loadFromFile("res/img/testbkg.jpg");
 	Vector2f bkgScale = Vector2f(mainView->getSize().x / texture.getSize().x,
 		mainView->getSize().y / texture.getSize().y);
-	stateObjects.push_back(CreateSprite(texture, bkgScale, Vector2f(mainView->getSize() / 2.0f)));
+	stateObjects.push_back(CreateSprite(texture, bkgScale));
 
 	// create title buttons
-	stateObjects.push_back(CreateText("Swan Fighter 2000", Vector2f(0.f, -900.f)));
+	stateObjects.push_back(CreateText("Swan Fighter 2000", defaultTextSize, Vector2f(0.f, -900.f/ratio )));
 
 
-	InteractiveObject* buttonPlay = new InteractiveObject(*this, CreateText("Play"));
+	InteractiveObject* buttonPlay = new InteractiveObject(*this, CreateText("Play", defaultTextSize));
 	buttonPlay->buttonValue = utils::stateType::PLAY;
 	stateObjects.push_back(buttonPlay);
 
-	InteractiveObject* buttonOptions = new InteractiveObject(*this, CreateText("Options", Vector2f(0.f, 350.f)));
+	InteractiveObject* buttonOptions = new InteractiveObject(*this, CreateText("Options", defaultTextSize, Vector2f(0.f, 350.f/ratio)));
 	buttonOptions->buttonValue = utils::stateType::OPTIONS;
 	stateObjects.push_back(buttonOptions);
 
-	InteractiveObject* buttonQuit = new InteractiveObject(*this, CreateText("Quit", Vector2f(0.f, 900.f)));
+	InteractiveObject* buttonQuit = new InteractiveObject(*this, CreateText("Quit", defaultTextSize, Vector2f(0.f, 900.f/ratio)));
 	buttonQuit->buttonValue = utils::stateType::QUIT;
 	stateObjects.push_back(buttonQuit);
 }
