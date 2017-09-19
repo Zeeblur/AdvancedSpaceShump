@@ -21,7 +21,6 @@ void GameObject::addImpulse(const Vector2f &direction)
 	if (moveSpeed.y < -maxSpeed) moveSpeed.y = -maxSpeed;
 }
 
-
 // Sprite object
 
 SpriteObject::SpriteObject(Sprite &spr, GameState& parent) : sprite(spr)
@@ -42,7 +41,7 @@ void SpriteObject::Update(const float& dt)
 	// if no input request. Decelerate
 	if (!moveReq)
 	{
-		std::cout << moveSpeed.x << ", " << moveSpeed.y << std::endl;
+		//std::cout << moveSpeed.x << ", " << moveSpeed.y << std::endl;
 		// lateral movement
 		if (moveSpeed.x < 0) moveSpeed.x += deceleration.x;
 		if (moveSpeed.x > 0) moveSpeed.x -= deceleration.x;
@@ -65,7 +64,6 @@ void SpriteObject::Update(const float& dt)
 	boundingBox = FloatRect(sprite.getLocalBounds());
 	moveReq = false;
 }
-
 
 // Text object
 

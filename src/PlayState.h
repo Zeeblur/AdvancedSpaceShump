@@ -6,6 +6,7 @@
 #include "GameState.h"
 #include "GameObject.h"
 #include "GameActor.h"
+#include "SpawnerAI.h"
 
 
 using namespace sf;
@@ -17,7 +18,20 @@ private:
 	Texture backgroundTexture;
 
 	Texture playerSprite;
+	Texture enSprite;
+
 	GameActor* player;
+	//SpawnerAI spawner;
+	std::vector<GameActor*> enemies;
+
+	Clock timer;
+	float time = 0.f;
+	float maxTime = 400;
+
+	bool first = true;
+
+	void Spawn();
+	float spawnHeight;
 public:
 
 	PlayState(StateManager &val, View &view, RenderWindow &win);

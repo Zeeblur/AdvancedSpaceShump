@@ -42,7 +42,7 @@ TextObject* GameState::CreateText(String s, Vector2f displacement)
 	return new TextObject(testText, *this);
 }
 
-SpriteObject* GameState::CreateSprite(const Texture& texture, Vector2f scale, IntRect sourceRect)
+SpriteObject* GameState::CreateSprite(const Texture& texture, Vector2f scale, Vector2f pos, IntRect sourceRect)
 {
 	Sprite sprite;
 
@@ -52,7 +52,7 @@ SpriteObject* GameState::CreateSprite(const Texture& texture, Vector2f scale, In
 	sprite.setScale(scale);
 
 	sprite.setOrigin(Vector2f(sprite.getLocalBounds().width / 2.f, sprite.getLocalBounds().height / 2.f));
-	sprite.setPosition(mainView->getSize() / 2.0f);
+	sprite.setPosition(pos);
 
 	return new SpriteObject(sprite, *this);
 }

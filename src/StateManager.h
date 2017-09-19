@@ -9,12 +9,8 @@
 #include "PlayState.h"
 #include "utils.h"
 
-
-
 using namespace sf;
 
-// GameState stores the state of the game/menu screens windows etc.
-//class GameState;
 
 class StateManager
 {
