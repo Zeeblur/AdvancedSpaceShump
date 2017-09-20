@@ -9,8 +9,11 @@ void GameObject::death(bool stop)
 	{
 		//end game
 		std::cout << "DIED" << std::endl;
-
+        return;
 	}
+
+    this->visible = false;
+    this->_parentState->AddScore(15);
 
 	// change sprite here.
 	// if player
@@ -20,7 +23,7 @@ void GameObject::death(bool stop)
 
 void GameObject::Update(const float& dt)
 {
-    if (!noD)
+    if (!noD && !enemy)
         return;
 
     auto sprite = dynamic_cast<SpriteObject*>(this);
@@ -31,6 +34,12 @@ void GameObject::Update(const float& dt)
     if (!rect)
     {
         this->visible = false;
+
+        if (enemy)
+        {
+            _parentState->AddScore(1);
+        }
+
     }
 
 }

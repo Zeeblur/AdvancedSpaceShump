@@ -2,9 +2,12 @@
 #include "GameObject.h"
 #include "Command.h"
 
-GameActor::GameActor(std::string val, GameObject &obj) : renderObject(&obj)
+GameActor::GameActor(GameObject &obj) : renderObject(&obj)
 {
     //std::cout << "Hello I am: " << val << std::endl;
+
+    renderObject->enemy = true;
+    endGame = false;
 
     inputHandler = InputHandler();
 
@@ -13,6 +16,9 @@ GameActor::GameActor(std::string val, GameObject &obj) : renderObject(&obj)
 GameActor::GameActor(std::string val, GameObject &obj, std::vector<GameObject*> bull) : renderObject(&obj), bullets(bull)
 {
 	std::cout << "Hello I am: " << val << std::endl;
+
+    renderObject->enemy = false;
+    endGame = true;
 
 	inputHandler = InputHandler();
 
@@ -29,7 +35,7 @@ GameActor::~GameActor()
 
 void GameActor::die()
 {
-    renderObject->death(true);
+    renderObject->death(endGame);
 }
 
 void GameActor::Update(const float& dt)

@@ -16,8 +16,9 @@ private:
     float currTime = 0;
     sf::Clock timer;
     bool canFire = true;
+	bool endGame = true;
 public:
-	GameActor(std::string val, GameObject& obj);
+	GameActor(GameObject& obj);
 	GameActor(std::string val, GameObject& obj, std::vector<GameObject*> bull);
 	~GameActor();
 

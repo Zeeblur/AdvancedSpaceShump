@@ -15,20 +15,34 @@ PlayState::PlayState(StateManager &val, View &view, RenderWindow &win)
 void PlayState::Update(const float& dt)
 {
     if(paused)
+    {
+        auto p = this->GameState::playerScore;
         return;
+    }
 
     // check for collisions
     for(GameActor* ga : enemies)
     {
         // if not visible- don't check for objects.
         if (!ga->renderObject->visible)
-            return;
+            continue;
 
         if (player->renderObject->CheckCollision(ga->renderObject))
         {
             std::cout << "ouch" << endl;
             player->die();
+            paused = true;
             return;
+        }
+
+        for(auto b : player->bullets)
+        {
+           if (b->visible && ga->renderObject->CheckCollision(b))
+           {
+               std::cout << "i am ded" << std::endl;
+               ga->die();
+
+           }
         }
 
     }
@@ -111,7 +125,7 @@ void PlayState::Spawn()
 
 
 	SpriteObject* es = CreateSprite(enSprite, Vector2f(5.0f/ratio, 5.0f/ratio), Vector2f(x,spawnHeight));
-	GameActor* enemy = new GameActor("bob", *es);
+	GameActor* enemy = new GameActor(*es);
 	stateObjects.push_back(es);
 	enemies.push_back(enemy);
 }

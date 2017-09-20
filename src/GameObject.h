@@ -32,6 +32,7 @@ struct GameObject
     void death(bool stop);
 
     Vector2f getPosition();
+	bool enemy = false;
 
 protected:
     Vector2f position;
@@ -43,6 +44,8 @@ protected:
 	float maxSpeed = 10.0f * moveScale;
 
     bool noD = false;
+
+
 
 	// player movement
 	Vector2f acceleration = Vector2f(0.2f * moveScale, 0.2f * moveScale);

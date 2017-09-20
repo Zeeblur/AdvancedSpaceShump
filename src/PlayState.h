@@ -36,6 +36,7 @@ private:
 	void Spawn();
 	float spawnHeight;
 public:
+    int playerScore = 0;
 
 	PlayState(StateManager &val, View &view, RenderWindow &win);
 	~PlayState() {}

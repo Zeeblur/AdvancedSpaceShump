@@ -2,6 +2,11 @@
 #include "GameObject.h"
 #include "StateManager.h"
 
+void GameState::AddScore(int val)
+{
+    playerScore += val;
+}
+
 void GameState::Render(RenderWindow &window) const
 {
 	//std::cout << "render gs.cpp" << std::endl;
