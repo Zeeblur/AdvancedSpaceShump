@@ -3,10 +3,54 @@
 
 GameObject::~GameObject(){}
 
+void GameObject::death(bool stop)
+{
+	if (stop)
+	{
+		//end game
+		std::cout << "DIED" << std::endl;
+
+	}
+
+	// change sprite here.
+	// if player
+	// if swan
+	// if swan2
+}
+
+void GameObject::Update(const float& dt)
+{
+    if (!noD)
+        return;
+
+    auto sprite = dynamic_cast<SpriteObject*>(this);
+    auto myView = _parentState->mainWindow->getView();
+    // check for objects out of scope
+    auto point = sprite->sprite.getPosition();
+    auto rect = _parentState->mainWindow->getViewport(myView).contains(point.x, point.y);
+    if (!rect)
+    {
+        this->visible = false;
+    }
+
+}
+
 void GameObject::setPosition(const Vector2f &newPos)
 {
 	position = newPos;
 	dirty = true;
+}
+
+Vector2f GameObject::getPosition()
+{
+    auto sprite = dynamic_cast<SpriteObject*>(this);
+    return sprite->sprite.getPosition();
+}
+
+void GameObject::Fire()
+{
+    moveSpeed = Vector2f(0.0f, 10.0f * moveScale);
+    noD = true;
 }
 
 void GameObject::addImpulse(const Vector2f &direction)
@@ -47,14 +91,21 @@ void SpriteObject::Render(RenderWindow &window)
 	//rect.setPosition(sprite.getPosition());
 	//window.draw(rect);
 
-
-	window.draw(sprite);
+    if (visible)
+        window.draw(sprite);
 }
 
 void SpriteObject::Update(const float& dt)
 {
+    if (dirty)
+    {
+        sprite.setPosition(position);
+        dirty = false;
+    }
+    GameObject::Update(dt);
+
 	// if no input request. Decelerate
-	if (!moveReq)
+	if (!moveReq && !noD)
 	{
 		//std::cout << moveSpeed.x << ", " << moveSpeed.y << std::endl;
 		// lateral movement

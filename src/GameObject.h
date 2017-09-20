@@ -15,24 +15,34 @@ struct GameObject
 	FloatRect boundingBox;
 
 	virtual void Render(RenderWindow &window) {}
-	virtual void Update(const float &dt) {}
+	virtual void Update(const float &dt);
 	virtual ~GameObject() = 0; 
 
 	bool dirty = true;  // flag for updates
 
 	void setPosition(const Vector2f &newPoss);
 	void addImpulse(const Vector2f &direction);
+    void Fire();
 
 	bool CheckCollision(GameObject* other);
 
+	bool visible = true;
+
+    // show death animation
+    void death(bool stop);
+
+    Vector2f getPosition();
+
 protected:
-	Vector2f position;
-	GameState* _parentState;
+    Vector2f position;
+    GameState* _parentState;
 
 	float moveScale = 60.0f;
 	bool moveReq = false;
 
-	float maxSpeed = 20.0f * moveScale;
+	float maxSpeed = 10.0f * moveScale;
+
+    bool noD = false;
 
 	// player movement
 	Vector2f acceleration = Vector2f(0.2f * moveScale, 0.2f * moveScale);

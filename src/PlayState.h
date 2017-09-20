@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <stdlib.h>
 #include <iostream>
 #include <memory>
 
@@ -18,6 +19,7 @@ private:
 
 	Texture playerSprite;
 	Texture enSprite;
+    Texture bulletSp;
 
 	GameActor* player;
 	//SpawnerAI spawner;
@@ -28,8 +30,8 @@ private:
 	float maxTime = 400;
 
     float ratio;
-
 	bool first = true;
+    bool paused = false;
 
 	void Spawn();
 	float spawnHeight;

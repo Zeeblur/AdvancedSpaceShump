@@ -4,14 +4,32 @@
 
 GameActor::GameActor(std::string val, GameObject &obj) : renderObject(&obj)
 {
+    //std::cout << "Hello I am: " << val << std::endl;
+
+    inputHandler = InputHandler();
+
+}
+
+GameActor::GameActor(std::string val, GameObject &obj, std::vector<GameObject*> bull) : renderObject(&obj), bullets(bull)
+{
 	std::cout << "Hello I am: " << val << std::endl;
 
 	inputHandler = InputHandler();
+
+    for(auto b : bullets)
+    {
+        b->visible = false;
+    }
 }
 
 GameActor::~GameActor()
 {
 
+}
+
+void GameActor::die()
+{
+    renderObject->death(true);
 }
 
 void GameActor::Update(const float& dt)
@@ -22,12 +40,43 @@ void GameActor::Update(const float& dt)
 
 	for (Command* com : commands)
 		com->execute(*this);
-	
+
+
+    if (!canFire) {
+        currTime += timer.getElapsedTime().asSeconds();
+        //cout << time << endl;
+        // once time elapsed spawn enemy
+        if (currTime >= coolDown) {
+            std::cout << "can fire" << std::endl;
+            canFire = true;
+        }
+    }
 }
 
 void GameActor::FireGun()
 {
 	std::cout << "pew pew" << std::endl;
+
+    if(!canFire)
+        return;
+
+    canFire = false;
+    timer.restart();
+    currTime = 0;
+
+    for(GameObject* bullet : bullets)
+    {
+        //check if avalible to use then fire.
+        if(!bullet->visible)
+        {
+            auto pos = this->renderObject->getPosition();
+            bullet->setPosition(pos);
+            bullet->Fire();
+            bullet->visible = true;
+            return;
+        }
+    }
+
 }
 
 void GameActor::Move(sf::Vector2f& dir)
