@@ -213,7 +213,10 @@ void InteractiveObject::Render(RenderWindow &window)
 void InteractiveObject::Click()
 {
 	// Clicked this button type.
-	_parentState->Click(buttonValue);
+	if (modeVal == -1)
+		_parentState->Click(buttonValue);
+	else
+		_parentState->Click(modeVal);
 }
 
 void InteractiveObject::HoverGraphics(const bool &val)

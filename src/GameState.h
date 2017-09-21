@@ -51,6 +51,7 @@ public:
 	void AddObject(const GameObject &go);
 
 	void Click(utils::stateType &val);
+    void Click(int &val);
 
 	RenderWindow* mainWindow;
 

@@ -17,14 +17,14 @@ void GameState::Render(RenderWindow &window) const
 	}
 }
 
-void GameState::AddObject(const GameObject &go)
-{
-	//stateObjects.push_back(&go);
-}
-
 void GameState::Click(utils::stateType &val) 
 {
 	parent->Click(val);
+}
+
+void GameState::Click(int &val)
+{
+    parent->Click(val);
 }
 
 TextObject* GameState::CreateText(String s, float textSize, Vector2f displacement)

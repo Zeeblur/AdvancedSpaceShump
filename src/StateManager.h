@@ -7,6 +7,7 @@
 #include "GameState.h"
 #include "StartState.h"
 #include "PlayState.h"
+#include "OptionsState.h"
 #include "utils.h"
 
 using namespace sf;
@@ -29,11 +30,19 @@ private:
 	Sprite sprite;
 	bool previousKeyState;
 
+	void ChangeWindow(int &val);
+
 	sf::Font mainFont;
 
 	Text testText;
 
+    int currentMode =0;
+    int currentStyle = Style::Fullscreen;
+
 	void InitialiseStates();
+
+    void ChangeWindow();
+
 public:
 	StateManager(sf::RenderWindow &wind);
 	~StateManager();
@@ -43,5 +52,10 @@ public:
 	void Render();
 
 	void Click(utils::stateType &choice);
+	void Click(int &i);
+
+	std::vector<VideoMode> vidModes;
+
+	void AddModes(std::vector<VideoMode> vid);
 
 };

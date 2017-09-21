@@ -79,6 +79,7 @@ struct TextObject : GameObject
 struct InteractiveObject : GameObject
 {
 	utils::stateType buttonValue;
+	int modeVal = -1;
 	SpriteObject* sprite;
 	TextObject* text;
 	TextObject* textShadow = nullptr;

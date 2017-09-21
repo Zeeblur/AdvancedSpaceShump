@@ -51,8 +51,18 @@ int main()
 	// the first element will always give the best mode (higher width, height and bits-per-pixel).
 	RenderWindow window(modes[0], "Advanced Space Shump", Style::Resize);
 
-    std::cout << modes[0].width << std::endl;
+	std::vector<VideoMode> choiceModes;
 
+    for (auto m : modes)
+    {
+        if (m.bitsPerPixel != 32)
+            continue;
+
+		choiceModes.push_back(m);
+        std::cout << m.width << ", " << m.height << std::endl;
+    }
+
+	auto a = choiceModes;
 	// cap frames
 	window.setVerticalSyncEnabled(true);
 
@@ -69,6 +79,8 @@ int main()
 	StateManager newGame = StateManager(window);
 	if (newGame.LoadGamefiles())
 		return 1;
+
+	newGame.AddModes(choiceModes);
 
 	while (window.isOpen()) {
 		Event event;
