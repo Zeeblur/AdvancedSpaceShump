@@ -26,6 +26,12 @@ GameActor::GameActor(std::string val, GameObject &obj, std::vector<GameObject*> 
     {
         b->visible = false;
     }
+
+	// player sound
+
+	auto a = soundBuffer.loadFromFile("res/sound/thunder.wav");
+
+	fire.setBuffer(soundBuffer);
 }
 
 GameActor::~GameActor()
@@ -91,6 +97,7 @@ void GameActor::FireGun()
             auto pos = this->renderObject->getPosition();
             bullet->setPosition(pos);
             bullet->Fire();
+			fire.play();
             bullet->visible = true;
             return;
         }

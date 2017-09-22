@@ -10,7 +10,15 @@ StateManager::StateManager(sf::RenderWindow &wind) : mainWindow(wind)
 	// get view for the window
 	mainView = wind.getView();
 
-	//todo: dereference null pointer here
+	soundBuffer.loadFromFile("res/sound/Hey.wav");
+
+	hey.setBuffer(soundBuffer);
+
+	soundDeath.loadFromFile("res/sound/Death.wav");
+
+	ded.setBuffer(soundDeath);
+
+
 
 	// initialise the states
 	InitialiseStates();
@@ -94,6 +102,8 @@ void StateManager::Click(stateType &choice)
 	// menu click has happened.
 	stateType newChoice = choice;
 
+	hey.play();
+
 	if (choice == stateType::QUIT)
 	{
 		mainWindow.close();
@@ -122,13 +132,15 @@ void StateManager::AddModes(std::vector<VideoMode> vid)
 
 void StateManager::Click(int &val)
 {
+	hey.play();
+
 	// need to add timer here
 	ChangeWindow(val);
 }
 
 void StateManager::EndGame()
 {
-
+	ded.play();
 	currentState = (int)stateType::HIGH;
 
 	auto state = dynamic_cast<PauseState*>(states[currentState]);

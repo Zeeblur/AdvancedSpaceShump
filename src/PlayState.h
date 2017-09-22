@@ -45,6 +45,9 @@ private:
 	int difficulty = 5;
 	float percentageOfBadness = 1.0f;
 
+	sf::SoundBuffer quackBuf;
+	sf::Sound quack;
+
 public:
     int playerScore = 0;
 

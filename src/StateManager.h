@@ -45,6 +45,14 @@ private:
     void ChangeWindow();
 
 
+	sf::SoundBuffer soundBuffer;
+	sf::Sound hey;
+
+	sf::SoundBuffer soundDeath;
+	sf::Sound ded;
+
+
+
 public:
 	StateManager(sf::RenderWindow &wind);
 	~StateManager();

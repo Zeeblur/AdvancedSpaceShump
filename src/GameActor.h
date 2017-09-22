@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML\Audio.hpp>
 #include <iostream>
 #include "InputHandler.h"
 
@@ -18,6 +19,9 @@ private:
     bool canFire = true;
 	bool endGame = true;
 
+
+	sf::SoundBuffer soundBuffer;
+	sf::Sound fire;
 
 public:
 	GameActor(GameObject& obj);

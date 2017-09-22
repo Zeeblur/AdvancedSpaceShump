@@ -60,6 +60,7 @@ void PlayState::Update(const float& dt)
            {
                std::cout << "i am ded" << std::endl;
                ga->die();
+			   b->visible = false;
 
            }
         }
@@ -129,8 +130,10 @@ void PlayState::Update(const float& dt)
 	if (playerScore > difficulty)
 	{
 		cout << "difficulty increase" << endl;
-		percentageOfBadness += 1.0f;
-		maxTime *= percentageOfBadness;
+		percentageOfBadness += 0.5f;
+
+		maxTime -= percentageOfBadness;
+		if (maxTime < 1) maxTime = 1;
 		difficulty += 5;
 	}
 
@@ -173,7 +176,7 @@ void PlayState::Init()
 
 	powerUpSprite.loadFromFile("res/img/Powerup.png");
 	// create powerup
-	auto powup = CreateSprite(powerUpSprite, Vector2f(5.0f / ratio, 5.0f / ratio), Vector2f(0.f, 0.f));
+	auto powup = CreateSprite(powerUpSprite, Vector2f(8.0f / ratio, 8.0f / ratio), Vector2f(0.f, 0.f));
 	powerUp = new GameActor(*powup);
 	powup->visible = false;
 	stateObjects.push_back(powup);
@@ -182,6 +185,10 @@ void PlayState::Init()
 	player->play = playerSprite;
 	player->pow = powerUpSprite;
 
+	auto a = quackBuf.loadFromFile("res/sound/quack.ogg");
+
+	quack.setBuffer(quackBuf);
+	quack.setVolume(60.0);
 }
 
 void PlayState::Spawn()
@@ -191,20 +198,27 @@ void PlayState::Spawn()
 
 	auto choice = rand() % 11;
 
-	if (choice > percentageOfBadness)
+
+	float pitch = rand() % 2;
+
+	quack.setPitch(pitch+1);
+	SpriteObject* es = CreateSprite(enSprite, Vector2f(8.0f / ratio, 8.0f / ratio), Vector2f(x, spawnHeight));
+	GameActor* enemy = new GameActor(*es);
+	stateObjects.push_back(es);
+	enemies.push_back(enemy);
+
+	// spawn at same place so double enemy type
+	if (choice < percentageOfBadness)
 	{
-		SpriteObject* es = CreateSprite(enemy2, Vector2f(5.0f / ratio, 5.0f / ratio), Vector2f(x, spawnHeight));
+		quack.setPitch(0.5);
+		SpriteObject* es = CreateSprite(enemy2, Vector2f(15.0f / ratio, 15.0f / ratio), Vector2f(x-50, spawnHeight-100));
 		GameActor* enemy = new GameActor(*es);
 		stateObjects.push_back(es);
 		enemies.push_back(enemy);
 	}
-	
-	x *= rand() % 12;
 
-	SpriteObject* es = CreateSprite(enSprite, Vector2f(5.0f/ratio, 5.0f/ratio), Vector2f(x,spawnHeight));
-	GameActor* enemy = new GameActor(*es);
-	stateObjects.push_back(es);
-	enemies.push_back(enemy);
+
+	quack.play();
 
 
 }
