@@ -14,7 +14,36 @@ std::vector<Command*> InputHandler::HandleInput()
 
 	if (sf::Joystick::isConnected(0))
 	{
-		
+
+		float x = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
+		float y = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
+
+		float episilon = 0.01;
+
+		if (x < 0 - episilon)
+		{
+			commands.push_back(buttonLeft_);
+		}
+		else if (x > 0 + episilon)
+		{
+			commands.push_back(buttonRight_);
+		}
+
+		if (y < 0 - episilon)
+		{
+			commands.push_back(buttonDown_);
+		}
+		else if (y > 0 + episilon)
+		{
+			commands.push_back(buttonUp_);
+		}
+
+
+		/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) commands.push_back(buttonUp_);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) commands.push_back(buttonDown_);
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) commands.push_back(buttonRight_);
+*/
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) commands.push_back(buttonUp_);

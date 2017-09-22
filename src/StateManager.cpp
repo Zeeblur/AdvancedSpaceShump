@@ -26,7 +26,7 @@ void StateManager::InitialiseStates()
 
 	states[(int)stateType::PAUSE] = new PauseState(*this, mainView, mainWindow);
 
-    states[(int)stateType::HIGH] = new PauseState(*this, mainView, mainWindow, true);
+    //states[(int)stateType::HIGH] = new PauseState(*this, mainView, mainWindow, true);
 
 	// set initial state to start state
 	currentState = (int)stateType::START;
@@ -49,6 +49,7 @@ void StateManager::Update(const float& dt)
 			case stateType::PLAY:
 				// move to pause
 				// need to pause game?
+				currentScore = states[(int)stateType::PLAY]->playerScore;
 				currentState = (int)stateType::PAUSE;
 				break;
             case stateType::HIGH:

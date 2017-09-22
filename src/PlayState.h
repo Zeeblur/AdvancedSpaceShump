@@ -18,10 +18,12 @@ private:
 	Texture backgroundTexture;
 
 	Texture playerSprite;
+	Texture powerUpSprite;
 	Texture enSprite;
     Texture bulletSp;
 
 	GameActor* player;
+	GameActor* powerUp;
 	//SpawnerAI spawner;
 	std::vector<GameActor*> enemies;
 

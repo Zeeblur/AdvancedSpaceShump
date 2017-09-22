@@ -26,6 +26,9 @@ void GameObject::Update(const float& dt)
     if (!noD && !enemy)
         return;
 
+	if (!this->visible)
+		return;
+
     auto sprite = dynamic_cast<SpriteObject*>(this);
     auto myView = _parentState->mainWindow->getView();
     // check for objects out of scope

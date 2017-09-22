@@ -35,7 +35,7 @@ protected:
 	SpriteObject* CreateSprite(const Texture &texture, Vector2f scale = Vector2f(1.0f, 1.0f), Vector2f pos = Vector2f(0.0f, 0.0f), IntRect sourceRect = IntRect());
 
 
-	int playerScore = 0;
+
 	virtual void Init() = 0;
 public:
 	// abstract class deconstruction
@@ -56,6 +56,8 @@ public:
 	RenderWindow* mainWindow;
 
 	void AddScore(int val);
+
+	int playerScore = 0;
 
 };
 

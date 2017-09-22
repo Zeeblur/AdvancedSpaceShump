@@ -117,6 +117,14 @@ void PlayState::Init()
 
 	enSprite.loadFromFile("res/img/swan.png");
 	timer.restart();
+
+
+	powerUpSprite.loadFromFile("res/img/Powerup.png");
+	// create powerup
+	auto powup = CreateSprite(powerUpSprite, Vector2f(5.0f / ratio, 5.0f / ratio), Vector2f(mainView->getSize() / 2.0f));
+	powerUp = new GameActor(*powup);
+	stateObjects.push_back(powup);
+
 }
 
 void PlayState::Spawn()

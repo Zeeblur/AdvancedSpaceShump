@@ -44,6 +44,7 @@ private:
 
     void ChangeWindow();
 
+
 public:
 	StateManager(sf::RenderWindow &wind);
 	~StateManager();
@@ -60,5 +61,6 @@ public:
 	void AddModes(std::vector<VideoMode> vid);
 
     std::vector<int> scoreValues;
+	int currentScore;
 
 };

@@ -63,7 +63,7 @@ void PauseState::Init()
     for (auto score : parent->scoreValues)
     {
         auto highscore = CreateText(to_string(score), defaultTextSize, -increment);
-        currentScore->text.setColor(Color::Black);
+		highscore->text.setColor(Color::Black);
         stateObjects.push_back(highscore);
 
         increment.y +=350/ratio;
@@ -74,6 +74,8 @@ void PauseState::Init()
 
 void PauseState::Update(const float& dt)
 {
+	currentScore->text.setString("Current Score: " + to_string(parent->currentScore));
+
 	for (GameObject* go : stateObjects)
 	{
 		go->Update(dt);
