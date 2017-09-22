@@ -14,6 +14,9 @@ private:
 	Command* buttonRight_;
 	Command* buttonShoot_;
 
+
+	float lastX, lastY;
+
 public:
 	std::vector<Command*> HandleInput();
 	InputHandler();

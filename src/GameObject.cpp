@@ -227,13 +227,17 @@ void InteractiveObject::HoverGraphics(const bool &val)
 	if (val)
 	{
 
-
-		auto a = Mouse::getPosition(*_parentState->mainWindow);
-
 		// if hovering alter style
 		backshape.setFillColor(Color::White);
 
 		text->text.setColor(Color::Black);
+
+		if (Joystick::isConnected(0))
+		{
+
+		}
+
+		auto a = Mouse::getPosition(*_parentState->mainWindow);
 
 		if (Mouse::isButtonPressed(Mouse::Left) && !previousMouseState)
 		{

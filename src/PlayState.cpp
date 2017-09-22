@@ -201,7 +201,8 @@ void PlayState::Spawn()
 
 	float pitch = rand() % 2;
 
-	quack.setPitch(pitch+1);
+
+	quack.setPitch(pitch+2);
 	SpriteObject* es = CreateSprite(enSprite, Vector2f(8.0f / ratio, 8.0f / ratio), Vector2f(x, spawnHeight));
 	GameActor* enemy = new GameActor(*es);
 	stateObjects.push_back(es);
@@ -217,9 +218,8 @@ void PlayState::Spawn()
 		enemies.push_back(enemy);
 	}
 
-
-	quack.play();
-
+	if (quack.getStatus() == Sound::Status::Stopped)
+		quack.play();
 
 }
 

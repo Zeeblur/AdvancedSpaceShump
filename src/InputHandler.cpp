@@ -18,7 +18,8 @@ std::vector<Command*> InputHandler::HandleInput()
 		float x = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
 		float y = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
 
-		float episilon = 0.01;
+
+		float episilon = 5;
 
 		if (x < 0 - episilon)
 		{
@@ -31,11 +32,11 @@ std::vector<Command*> InputHandler::HandleInput()
 
 		if (y < 0 - episilon)
 		{
-			commands.push_back(buttonDown_);
+			commands.push_back(buttonUp_);
 		}
 		else if (y > 0 + episilon)
 		{
-			commands.push_back(buttonUp_);
+			commands.push_back(buttonDown_);
 		}
 
 	}

@@ -149,9 +149,18 @@ void StateManager::EndGame()
 	if (scoreValues.size() < 6)
 	{
 		scoreValues.push_back(currentScore);
-		std::sort(scoreValues.begin(), scoreValues.end());
+
 	}
-	// redo game
+	else if (scoreValues.size() >= 6)
+	{
+		if (currentScore > scoreValues[scoreValues.size() - 1])
+			scoreValues[scoreValues.size()-1] = currentScore;
+	}
+
+	std::sort(scoreValues.begin(), scoreValues.end());
+
+	std::reverse(scoreValues.begin(), scoreValues.end());
+
 }
 
 
