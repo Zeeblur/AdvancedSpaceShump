@@ -39,6 +39,9 @@ std::vector<Command*> InputHandler::HandleInput()
 			commands.push_back(buttonDown_);
 		}
 
+
+		if (sf::Joystick::isButtonPressed(0, 0)) commands.push_back(buttonShoot_);
+
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) commands.push_back(buttonUp_);

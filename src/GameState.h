@@ -14,6 +14,7 @@ class GameObject;
 class TextObject;
 class SpriteObject;
 class StateManager;
+class InteractiveObject;
 
 class GameState
 {
@@ -34,8 +35,7 @@ protected:
 	// sprites
 	SpriteObject* CreateSprite(const Texture &texture, Vector2f scale = Vector2f(1.0f, 1.0f), Vector2f pos = Vector2f(0.0f, 0.0f), IntRect sourceRect = IntRect());
 
-
-
+	std::vector<InteractiveObject*> buttons;
 	virtual void Init() = 0;
 public:
 	// abstract class deconstruction

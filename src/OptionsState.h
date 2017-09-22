@@ -12,10 +12,11 @@ class OptionsState : public GameState
 
     Font titleFont;
 
+	int choice = 0;
 
     std::vector<VideoMode> resChoices;
 
-
+	bool lastPos = false;
 public:
     OptionsState(StateManager &sm, View &view, RenderWindow &win);
     ~OptionsState();

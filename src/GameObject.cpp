@@ -224,6 +224,7 @@ void InteractiveObject::Click()
 
 void InteractiveObject::HoverGraphics(const bool &val)
 {
+
 	if (val)
 	{
 
@@ -234,15 +235,19 @@ void InteractiveObject::HoverGraphics(const bool &val)
 
 		if (Joystick::isConnected(0))
 		{
-
+			if (Joystick::isButtonPressed(0, 0))
+				Click();
 		}
-
-		auto a = Mouse::getPosition(*_parentState->mainWindow);
-
-		if (Mouse::isButtonPressed(Mouse::Left) && !previousMouseState)
+		else
 		{
-			std::cout << "clicked button" << std::endl;
-			Click();
+		
+			auto a = Mouse::getPosition(*_parentState->mainWindow);
+
+			if (Mouse::isButtonPressed(Mouse::Left) && !previousMouseState)
+			{
+				std::cout << "clicked button" << std::endl;
+				Click();
+			}
 		}
 	}
 	else
@@ -253,6 +258,8 @@ void InteractiveObject::HoverGraphics(const bool &val)
 
 	previousMouseState = Mouse::isButtonPressed(Mouse::Left);
 }
+
+
 
 void InteractiveObject::Update(const float& dt)
 {
@@ -268,7 +275,11 @@ void InteractiveObject::Update(const float& dt)
 	auto mousePos = _parentState->mainWindow->mapPixelToCoords(Mouse::getPosition(*_parentState->mainWindow));
 
 	// update each object within interactive
-	HoverGraphics(boundingBox.contains(Vector2f(mousePos)));
+	if (!Joystick::isConnected(0))
+	{
+		HoverGraphics(boundingBox.contains(Vector2f(mousePos)));
+	}
+	
 
 
 }

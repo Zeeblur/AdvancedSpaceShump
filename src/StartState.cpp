@@ -12,6 +12,7 @@ StartState::StartState(StateManager &val, View &view, RenderWindow &win)
 	mainView = &view;
 	parent = &val;
 	Init();
+
 }
 
 StartState::~StartState()
@@ -45,20 +46,49 @@ void StartState::Init()
 	InteractiveObject* buttonPlay = new InteractiveObject(*this, CreateText("Play", defaultTextSize));
 	buttonPlay->buttonValue = utils::stateType::PLAY;
 	stateObjects.push_back(buttonPlay);
+	buttons.push_back(buttonPlay);
 
 	InteractiveObject* buttonOptions = new InteractiveObject(*this, CreateText("Options", defaultTextSize, Vector2f(0.f, 350.f/ratio)));
 	buttonOptions->buttonValue = utils::stateType::OPTIONS;
 	stateObjects.push_back(buttonOptions);
+	buttons.push_back(buttonOptions);
 
 	InteractiveObject* buttonQuit = new InteractiveObject(*this, CreateText("Quit", defaultTextSize, Vector2f(0.f, 900.f/ratio)));
 	buttonQuit->buttonValue = utils::stateType::QUIT;
 	stateObjects.push_back(buttonQuit);
+	buttons.push_back(buttonQuit);
 }
 
 void StartState::Update(const float& dt)
 {
+	
+	if (Joystick::isConnected(0))
+	{
+		if (Joystick::getAxisPosition(0, Joystick::Axis::PovY) < -10 && !lastPos)
+		{
+			choice++;
+			if (choice >= buttons.size())
+			{
+				choice = 0;
+			}
+		}
+
+
+		for (InteractiveObject* bt : buttons)
+		{
+
+			bt->HoverGraphics(false);
+		}
+
+
+		buttons[choice]->HoverGraphics(true);
+
+		lastPos = Joystick::getAxisPosition(0, Joystick::Axis::PovY);
+	}
+
 	for (GameObject* go : stateObjects)
 	{
+
 		go->Update(dt);
 	}
 }

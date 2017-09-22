@@ -42,7 +42,14 @@ void StateManager::InitialiseStates()
 
 void StateManager::Update(const float& dt)
 {
-	if (Keyboard::isKeyPressed(Keyboard::Key::Escape) && !previousKeyState)
+	bool escape = Keyboard::isKeyPressed(Keyboard::Key::Escape);
+
+	if (Joystick::isConnected(0))
+	{
+		escape = Joystick::isButtonPressed(0, 1);
+	}
+
+	if (escape && !previousKeyState)
 	{
 		bool restart = false;
 		//do something (pause or unpause)
@@ -78,7 +85,7 @@ void StateManager::Update(const float& dt)
 			pauseEnd->notEnd = false;
 		}
 	}
-    previousKeyState = Keyboard::isKeyPressed(Keyboard::Key::Escape);
+	previousKeyState = escape;
 
 	states[currentState]->Update(dt);
 }
@@ -167,7 +174,7 @@ void StateManager::EndGame()
 void StateManager::ChangeWindow(int &val)
 {
     //fullscreen, windowed, borderless window
-//if -2 then change window mode
+	//if -2 then change window mode
 	//otherwise pick from resolutions
 
 	if (currentMode >= 0)

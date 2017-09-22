@@ -5,6 +5,9 @@
 #include "GameState.h"
 #include "GameObject.h"
 
+
+//class InteractiveObject;
+
 using namespace sf;
 
 class StartState : public GameState
@@ -16,6 +19,8 @@ private:
 
 	Font titleFont;
 
+	bool lastPos = false;
+
 public:
 	StartState(StateManager &val, View &view, RenderWindow &win);
 	~StartState();
@@ -23,6 +28,7 @@ public:
 
 	//void UpdateViewSize(const Vector2f &size);
 
+	int choice = 0;
 	
 	void Update(const float& dt);
 };

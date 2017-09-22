@@ -38,6 +38,7 @@ void OptionsState::Init()
     windowstyleButton = new InteractiveObject(*this, CreateText("Windowed", defaultTextSize, Vector2f(0.f, -650.f/ratio)));
     windowstyleButton->modeVal = -2;
     stateObjects.push_back(windowstyleButton);
+	buttons.push_back(windowstyleButton);
 
     Vector2f increment = Vector2f(0.f,0.f);
 
@@ -47,6 +48,7 @@ void OptionsState::Init()
         InteractiveObject* button = new InteractiveObject(*this, CreateText(txt, defaultTextSize, increment));
         button->modeVal = i;
         stateObjects.push_back(button);
+		buttons.push_back(button);
         increment.y +=350/ratio;
     }
 
@@ -60,6 +62,30 @@ void OptionsState::SetModes(std::vector<sf::VideoMode> mod)
 
 void OptionsState::Update(const float &dt)
 {
+	if (Joystick::isConnected(0))
+	{
+		if (Joystick::getAxisPosition(0, Joystick::Axis::PovY) < -10 && !lastPos)
+		{
+			choice++;
+			if (choice >= buttons.size())
+			{
+				choice = 0;
+			}
+		}
+
+
+		for (InteractiveObject* bt : buttons)
+		{
+
+			bt->HoverGraphics(false);
+		}
+
+
+		buttons[choice]->HoverGraphics(true);
+
+		lastPos = Joystick::getAxisPosition(0, Joystick::Axis::PovY);
+	}
+
     for (GameObject* go : stateObjects)
     {
         go->Update(dt);
