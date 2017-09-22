@@ -9,6 +9,7 @@ namespace utils
 		PLAY,
 		PAUSE,
 		OPTIONS,
+		HIGH,
 		QUIT
 	};
 }

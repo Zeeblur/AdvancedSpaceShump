@@ -10,6 +10,8 @@ StateManager::StateManager(sf::RenderWindow &wind) : mainWindow(wind)
 	// get view for the window
 	mainView = wind.getView();
 
+	//todo: dereference null pointer here
+
 	// initialise the states
 	InitialiseStates();
 }
@@ -22,12 +24,44 @@ void StateManager::InitialiseStates()
 
 	states[(int)stateType::OPTIONS] = new OptionsState(*this, mainView, mainWindow);
 
+	states[(int)stateType::PAUSE] = new PauseState(*this, mainView, mainWindow);
+
+    states[(int)stateType::HIGH] = new PauseState(*this, mainView, mainWindow, true);
+
 	// set initial state to start state
 	currentState = (int)stateType::START;
 }
 
 void StateManager::Update(const float& dt)
 {
+	if (Keyboard::isKeyPressed(Keyboard::Key::Escape) && !previousKeyState)
+	{
+		//do something (pause or unpause)
+		switch ((stateType)currentState)
+		{
+			case stateType::START:
+				mainWindow.close();
+				break;
+			case stateType::OPTIONS:
+				// move back to start
+				currentState = (int)stateType::START;
+				break;
+			case stateType::PLAY:
+				// move to pause
+				// need to pause game?
+				currentState = (int)stateType::PAUSE;
+				break;
+            case stateType::HIGH:
+                currentState = (int)stateType::START;
+			case stateType::PAUSE:
+				// move back to play
+				// need to unpause
+				currentState = (int)stateType::PLAY;
+				break;
+		}
+	}
+    previousKeyState = Keyboard::isKeyPressed(Keyboard::Key::Escape);
+
 	states[currentState]->Update(dt);
 }
 
@@ -78,7 +112,7 @@ void StateManager::AddModes(std::vector<VideoMode> vid)
 
 void StateManager::Click(int &val)
 {
-
+	// need to add timer here
 	ChangeWindow(val);
 }
 

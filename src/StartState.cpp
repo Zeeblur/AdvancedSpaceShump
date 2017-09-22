@@ -33,7 +33,7 @@ void StartState::Init()
 	titleFont.loadFromFile("res/fonts/ka1.ttf");
 	mainFont = &titleFont;
 
-	texture.loadFromFile("res/img/testbkg.jpg");
+	texture.loadFromFile("res/img/title.gif");
 	Vector2f bkgScale = Vector2f(mainView->getSize().x / texture.getSize().x,
 		mainView->getSize().y / texture.getSize().y);
 	stateObjects.push_back(CreateSprite(texture, bkgScale));

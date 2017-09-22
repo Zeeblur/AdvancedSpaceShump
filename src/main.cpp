@@ -95,18 +95,7 @@ int main()
 
 
 		}
-		if (Keyboard::isKeyPressed(Keyboard::Escape)) {
-			window.close();
-		}
 
-		if (Keyboard::isKeyPressed(Keyboard::P))
-		{
-			Vector2u size = Vector2u(modes[15].width, modes[15].height);
-			window.setSize(size);
-
-			Vector2i pos = Vector2i((modes[0].width / 2)-(size.x /2), (modes[0].height / 2)-(size.y/2));
-			window.setPosition(pos);
-		}
 
 		// update and render window
 		window.clear();

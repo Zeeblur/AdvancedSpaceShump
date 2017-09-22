@@ -31,6 +31,7 @@ void PlayState::Update(const float& dt)
         {
             std::cout << "ouch" << endl;
             player->die();
+
             paused = true;
             return;
         }

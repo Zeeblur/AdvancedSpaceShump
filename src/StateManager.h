@@ -8,6 +8,7 @@
 #include "StartState.h"
 #include "PlayState.h"
 #include "OptionsState.h"
+#include "PauseState.h"
 #include "utils.h"
 
 using namespace sf;
@@ -57,5 +58,7 @@ public:
 	std::vector<VideoMode> vidModes;
 
 	void AddModes(std::vector<VideoMode> vid);
+
+    std::vector<int> scoreValues;
 
 };
