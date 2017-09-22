@@ -26,7 +26,6 @@ public:
 
 	TextObject* currentScore;
 	//void UpdateViewSize(const Vector2f &size);
-
 	
 	void Update(const float& dt);
 };

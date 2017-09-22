@@ -38,12 +38,6 @@ std::vector<Command*> InputHandler::HandleInput()
 			commands.push_back(buttonUp_);
 		}
 
-
-		/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) commands.push_back(buttonUp_);
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) commands.push_back(buttonDown_);
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) commands.push_back(buttonRight_);
-*/
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) commands.push_back(buttonUp_);
@@ -56,12 +50,6 @@ std::vector<Command*> InputHandler::HandleInput()
 
 void InputHandler::MapButtons()
 {
-	//// joystick controlls
-	//if (sf::Joystick::isConnected(0))
-	//{
-
-	//	return;
-	//}
 
 	buttonShoot_ = new FireCommand;
 	auto down = sf::Vector2f(0.f, 1.f);

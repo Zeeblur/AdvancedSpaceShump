@@ -29,14 +29,21 @@ private:
 
 	Clock timer;
 	float time = 0.f;
-	float maxTime = 400;
+	float maxTime = 10;
+
+	Clock totalTime;
 
     float ratio;
 	bool first = true;
     bool paused = false;
 
 	void Spawn();
+	void SpawnPower();
 	float spawnHeight;
+
+	int difficulty = 25;
+	float percentageOfBadness = 0.0f;
+
 public:
     int playerScore = 0;
 

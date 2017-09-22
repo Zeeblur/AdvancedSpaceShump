@@ -89,3 +89,17 @@ void GameActor::Move(sf::Vector2f& dir)
 {
 	renderObject->addImpulse(dir);
 }
+
+void GameActor::Updoot(bool val)
+{
+	auto ro = dynamic_cast<SpriteObject*>(renderObject);
+
+	if (val)
+	{
+		ro->sprite.setTexture(pow);
+	}
+	else
+	{
+		ro->sprite.setTexture(play);
+	}
+}

@@ -48,6 +48,14 @@ void PlayState::Update(const float& dt)
 
     }
 
+	if (powerUp->renderObject->visible)
+	{
+		if (player->renderObject->CheckCollision(powerUp->renderObject))
+		{
+			player->Updoot(true);
+		}
+	}
+
 
     // update movements
 	player->Update(dt);
@@ -67,20 +75,44 @@ void PlayState::Update(const float& dt)
 
 
 	// timer for spawning enemies
-	if (first) timer.restart(); first = false;
+	if (first)
+	{
+		timer.restart();
+		totalTime.restart();
+		first = false;
+	}
 
 	time += timer.getElapsedTime().asSeconds();
 	//cout << time << endl;
 
 	// once time elapsed spawn enemy
-	if (time >= 4)// maxTime)
+	if (time >= maxTime)
 	{
-
 		Spawn();
 
 		timer.restart();
 		time = 0;
+	}
 
+	int t = totalTime.getElapsedTime().asSeconds();
+	
+	if (t % 2 == 0)//10 == 0)
+	{
+		SpawnPower();
+	}
+
+	if (powerUp->renderObject->visible)
+	{
+		auto direction = Vector2f(0.f, -1.0f);
+		powerUp->Move(direction);
+	}
+
+	// increase diff
+	if (playerScore > difficulty)
+	{
+		cout << "difficulty increase" << endl;
+		percentageOfBadness += 1.0f;
+		difficulty += 25;
 	}
 
 }
@@ -99,7 +131,7 @@ void PlayState::Init()
 
 	// create player
 
-	playerSprite.loadFromFile("res/img/swan.png");
+	playerSprite.loadFromFile("res/img/hero.png");
     bulletSp.loadFromFile("res/img/bread.png");
 
     std::vector<GameObject*> bulletList;
@@ -121,9 +153,14 @@ void PlayState::Init()
 
 	powerUpSprite.loadFromFile("res/img/Powerup.png");
 	// create powerup
-	auto powup = CreateSprite(powerUpSprite, Vector2f(5.0f / ratio, 5.0f / ratio), Vector2f(mainView->getSize() / 2.0f));
+	auto powup = CreateSprite(powerUpSprite, Vector2f(5.0f / ratio, 5.0f / ratio), Vector2f(0.f, 0.f));
 	powerUp = new GameActor(*powup);
+	powup->visible = false;
 	stateObjects.push_back(powup);
+
+
+	player->play = playerSprite;
+	player->pow = powerUpSprite;
 
 }
 
@@ -137,4 +174,16 @@ void PlayState::Spawn()
 	GameActor* enemy = new GameActor(*es);
 	stateObjects.push_back(es);
 	enemies.push_back(enemy);
+}
+
+void PlayState::SpawnPower()
+{
+	if (powerUp->renderObject->visible)
+		return;
+
+	float x = 200.0f / ratio;
+	x *= rand() % 12;
+
+	powerUp->renderObject->visible = true;
+	powerUp->renderObject->setPosition(Vector2f(x, spawnHeight));
 }

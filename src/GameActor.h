@@ -28,4 +28,9 @@ public:
 	void die();
 	GameObject* renderObject;
 	std::vector<GameObject*> bullets;
+
+	void Updoot(bool val);
+
+	sf::Texture play;
+	sf::Texture pow;
 };
