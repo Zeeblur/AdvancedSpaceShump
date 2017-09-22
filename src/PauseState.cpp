@@ -47,37 +47,46 @@ void PauseState::Init()
     pTxt->text.setColor(Color::Black);
     stateObjects.push_back(pTxt);
 
-    if (!highscores)
-    {
-        currentScore = CreateText("Current Score:", defaultTextSize, Vector2f(0.0f, -650.f / ratio));
-        currentScore->text.setColor(Color::Black);
-        stateObjects.push_back(currentScore);
-    }
 
 
-    Vector2f increment = Vector2f(0.f,0.f);
-
-   // auto scores = parent.
-
-    // get highscores
-    for (auto score : parent->scoreValues)
-    {
-        auto highscore = CreateText(to_string(score), defaultTextSize, -increment);
-		highscore->text.setColor(Color::Black);
-        stateObjects.push_back(highscore);
-
-        increment.y +=350/ratio;
-    }
-
+    currentScore = CreateText("Current Score:", defaultTextSize, Vector2f(0.0f, -650.f / ratio));
+    currentScore->text.setColor(Color::Black);
+    stateObjects.push_back(currentScore);
 
 }
 
+
+
 void PauseState::Update(const float& dt)
 {
-	currentScore->text.setString("Current Score: " + to_string(parent->currentScore));
+	if (notEnd)
+		currentScore->text.setString("Current Score: " + to_string(parent->currentScore));
 
 	for (GameObject* go : stateObjects)
 	{
 		go->Update(dt);
+	}
+}
+
+void PauseState::Recall()
+{
+	notEnd = false;
+	currentScore->text.setString("YOU LOOOOSEEE: Score: " + to_string(parent->currentScore));
+
+	auto ratio = 3840 / mainWindow->getSize().x;
+	ratio = ratio * 2;
+
+	Vector2f increment = Vector2f(0.f, 0.f);
+
+	// auto scores = parent.
+
+	// get highscores
+	for (auto score : parent->scoreValues)
+	{
+		auto highscore = CreateText(to_string(score), defaultTextSize, increment);
+		highscore->text.setColor(Color::Black);
+		stateObjects.push_back(highscore);
+
+		increment.y += 350 / ratio;
 	}
 }

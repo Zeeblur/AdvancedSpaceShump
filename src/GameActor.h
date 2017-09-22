@@ -17,6 +17,8 @@ private:
     sf::Clock timer;
     bool canFire = true;
 	bool endGame = true;
+
+
 public:
 	GameActor(GameObject& obj);
 	GameActor(std::string val, GameObject& obj, std::vector<GameObject*> bull);
@@ -30,7 +32,7 @@ public:
 	std::vector<GameObject*> bullets;
 
 	void Updoot(bool val);
-
+	int updoot = 0;
 	sf::Texture play;
 	sf::Texture pow;
 };

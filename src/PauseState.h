@@ -28,4 +28,7 @@ public:
 	//void UpdateViewSize(const Vector2f &size);
 	
 	void Update(const float& dt);
+	void Recall();
+
+	bool notEnd = true;
 };

@@ -55,7 +55,7 @@ public:
 
 	RenderWindow* mainWindow;
 
-	void AddScore(int val);
+	virtual void AddScore(int val);
 
 	int playerScore = 0;
 

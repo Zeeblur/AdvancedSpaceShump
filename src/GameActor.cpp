@@ -34,8 +34,21 @@ GameActor::~GameActor()
 }
 
 void GameActor::die()
-{
-    renderObject->death(endGame);
+{	
+	if (updoot == 0)
+	{
+		renderObject->death(endGame);
+		return;
+	}
+
+
+	updoot++;
+
+	if (updoot == 4)
+	{
+		this->Updoot(false);
+	}
+
 }
 
 void GameActor::Update(const float& dt)
@@ -97,9 +110,11 @@ void GameActor::Updoot(bool val)
 	if (val)
 	{
 		ro->sprite.setTexture(pow);
+		updoot = 1;
 	}
 	else
 	{
 		ro->sprite.setTexture(play);
+		updoot = 0;
 	}
 }

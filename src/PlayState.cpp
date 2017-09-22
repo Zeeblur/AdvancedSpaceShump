@@ -1,7 +1,9 @@
 #include "PlayState.h"
-//#include "SpawnerAI.h"
+#include "StateManager.h"
 
 using namespace std;
+
+
 
 PlayState::PlayState(StateManager &val, View &view, RenderWindow &win)
 {
@@ -12,6 +14,11 @@ PlayState::PlayState(StateManager &val, View &view, RenderWindow &win)
 	spawnHeight = mainView->getSize().y - (100.f/ratio);
 }
 
+void PlayState::AddScore(int val)
+{
+	playerScore += val;
+}
+
 void PlayState::Update(const float& dt)
 {
     if(paused)
@@ -19,6 +26,8 @@ void PlayState::Update(const float& dt)
         auto p = this->GameState::playerScore;
         return;
     }
+
+	parent->currentScore = playerScore;
 
     // check for collisions
     for(GameActor* ga : enemies)
@@ -32,8 +41,17 @@ void PlayState::Update(const float& dt)
             std::cout << "ouch" << endl;
             player->die();
 
-            paused = true;
+			if (player->updoot > 0)
+			{
+				ga->die();
+			}
+			else
+			{
+				parent->EndGame();
+			}
+
             return;
+
         }
 
         for(auto b : player->bullets)
@@ -96,7 +114,7 @@ void PlayState::Update(const float& dt)
 
 	int t = totalTime.getElapsedTime().asSeconds();
 	
-	if (t % 2 == 0)//10 == 0)
+	if (t % 10 == 0)
 	{
 		SpawnPower();
 	}
@@ -112,7 +130,8 @@ void PlayState::Update(const float& dt)
 	{
 		cout << "difficulty increase" << endl;
 		percentageOfBadness += 1.0f;
-		difficulty += 25;
+		maxTime *= percentageOfBadness;
+		difficulty += 5;
 	}
 
 }
@@ -150,6 +169,7 @@ void PlayState::Init()
 	enSprite.loadFromFile("res/img/swan.png");
 	timer.restart();
 
+	enemy2.loadFromFile("res/img/bigSwan.png");
 
 	powerUpSprite.loadFromFile("res/img/Powerup.png");
 	// create powerup
@@ -169,11 +189,24 @@ void PlayState::Spawn()
 	float x = 200.0f/ratio;
     x *= rand() % 12;
 
+	auto choice = rand() % 11;
+
+	if (choice > percentageOfBadness)
+	{
+		SpriteObject* es = CreateSprite(enemy2, Vector2f(5.0f / ratio, 5.0f / ratio), Vector2f(x, spawnHeight));
+		GameActor* enemy = new GameActor(*es);
+		stateObjects.push_back(es);
+		enemies.push_back(enemy);
+	}
+	
+	x *= rand() % 12;
 
 	SpriteObject* es = CreateSprite(enSprite, Vector2f(5.0f/ratio, 5.0f/ratio), Vector2f(x,spawnHeight));
 	GameActor* enemy = new GameActor(*es);
 	stateObjects.push_back(es);
 	enemies.push_back(enemy);
+
+
 }
 
 void PlayState::SpawnPower()

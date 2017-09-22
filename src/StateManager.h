@@ -25,7 +25,7 @@ private:
 	unsigned int currentState;
 
 	// list of states.
-	std::array<GameState*, 4> states = {};
+	std::array<GameState*, 5> states = {};
 
 	Texture texture;
 	Sprite sprite;
@@ -60,7 +60,9 @@ public:
 
 	void AddModes(std::vector<VideoMode> vid);
 
-    std::vector<int> scoreValues;
-	int currentScore;
+	std::vector<int> scoreValues;
+	int currentScore = 0;
+
+	void EndGame();
 
 };

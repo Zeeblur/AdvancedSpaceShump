@@ -26,7 +26,7 @@ void StateManager::InitialiseStates()
 
 	states[(int)stateType::PAUSE] = new PauseState(*this, mainView, mainWindow);
 
-    //states[(int)stateType::HIGH] = new PauseState(*this, mainView, mainWindow, true);
+    states[(int)stateType::HIGH] = new PauseState(*this, mainView, mainWindow, true);
 
 	// set initial state to start state
 	currentState = (int)stateType::START;
@@ -36,6 +36,7 @@ void StateManager::Update(const float& dt)
 {
 	if (Keyboard::isKeyPressed(Keyboard::Key::Escape) && !previousKeyState)
 	{
+		bool restart = false;
 		//do something (pause or unpause)
 		switch ((stateType)currentState)
 		{
@@ -49,16 +50,24 @@ void StateManager::Update(const float& dt)
 			case stateType::PLAY:
 				// move to pause
 				// need to pause game?
-				currentScore = states[(int)stateType::PLAY]->playerScore;
 				currentState = (int)stateType::PAUSE;
 				break;
             case stateType::HIGH:
                 currentState = (int)stateType::START;
+				restart = true;
+				states[(int)stateType::PLAY] = new PlayState(*this, mainView, mainWindow);
+				break;
 			case stateType::PAUSE:
 				// move back to play
 				// need to unpause
 				currentState = (int)stateType::PLAY;
 				break;
+		}
+
+		if (restart)
+		{
+			auto pauseEnd = dynamic_cast<PauseState*>(states[(int)stateType::HIGH]);
+			pauseEnd->notEnd = false;
 		}
 	}
     previousKeyState = Keyboard::isKeyPressed(Keyboard::Key::Escape);
@@ -116,6 +125,23 @@ void StateManager::Click(int &val)
 	// need to add timer here
 	ChangeWindow(val);
 }
+
+void StateManager::EndGame()
+{
+
+	currentState = (int)stateType::HIGH;
+
+	auto state = dynamic_cast<PauseState*>(states[currentState]);
+	state->Recall();
+
+	if (scoreValues.size() < 6)
+	{
+		scoreValues.push_back(currentScore);
+		std::sort(scoreValues.begin(), scoreValues.end());
+	}
+	// redo game
+}
+
 
 void StateManager::ChangeWindow(int &val)
 {

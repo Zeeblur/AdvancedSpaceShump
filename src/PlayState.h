@@ -20,6 +20,7 @@ private:
 	Texture playerSprite;
 	Texture powerUpSprite;
 	Texture enSprite;
+	Texture enemy2;
     Texture bulletSp;
 
 	GameActor* player;
@@ -41,8 +42,8 @@ private:
 	void SpawnPower();
 	float spawnHeight;
 
-	int difficulty = 25;
-	float percentageOfBadness = 0.0f;
+	int difficulty = 5;
+	float percentageOfBadness = 1.0f;
 
 public:
     int playerScore = 0;
@@ -52,4 +53,6 @@ public:
 	//int LoadGamefiles();
 	void Update(const float& dt);
 	void Init();
+
+	void AddScore(int val);
 };

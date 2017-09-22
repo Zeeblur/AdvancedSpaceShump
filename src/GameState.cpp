@@ -2,10 +2,7 @@
 #include "GameObject.h"
 #include "StateManager.h"
 
-void GameState::AddScore(int val)
-{
-    playerScore += val;
-}
+
 
 void GameState::Render(RenderWindow &window) const
 {
@@ -25,6 +22,10 @@ void GameState::Click(utils::stateType &val)
 void GameState::Click(int &val)
 {
     parent->Click(val);
+}
+
+void GameState::AddScore(int val)
+{
 }
 
 TextObject* GameState::CreateText(String s, float textSize, Vector2f displacement)
